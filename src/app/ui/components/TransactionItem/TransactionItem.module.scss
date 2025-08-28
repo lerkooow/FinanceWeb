@@ -1,0 +1,146 @@
+.transactionItem {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow:
+    0 8px 24px rgba(65, 65, 83, 0.06),
+    0 2px 8px rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(65, 65, 83, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+
+  &--expense::before {
+    background: #ef4444;
+  }
+
+  &--income::before {
+    background: #10b981;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 16px 32px rgba(65, 65, 83, 0.12),
+      0 4px 16px rgba(0, 0, 0, 0.06);
+
+    &::before {
+      transform: scaleX(1);
+    }
+  }
+
+  &__transactionIcon {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(65, 65, 83, 0.08);
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+
+  &__transactionContent {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+
+  &__transactionInfo {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  &__transactionTitle {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0 0 4px 0;
+  }
+
+  &__transactionCategory {
+    font-size: 14px;
+    color: #6b7280;
+    margin: 0;
+    font-weight: 500;
+  }
+
+  &__transactionDate {
+    font-size: 14px;
+    color: #9ca3af;
+    font-weight: 500;
+    min-width: 80px;
+    text-align: right;
+  }
+
+  &__transactionAmount {
+    font-size: 20px;
+    font-weight: 700;
+    min-width: 120px;
+    text-align: right;
+
+    &--expense {
+      color: #ef4444;
+    }
+
+    &--income {
+      color: #10b981;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 20px;
+    flex-wrap: wrap;
+    gap: 16px;
+
+    &__transactionContent {
+      width: 100%;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 12px;
+    }
+
+    &__transactionDate {
+      text-align: left;
+    }
+
+    &__transactionAmount {
+      text-align: left;
+      font-size: 24px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 16px;
+
+    &__transactionIcon {
+      width: 48px;
+      height: 48px;
+      font-size: 20px;
+    }
+  }
+
+  @media (max-width: 425px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
