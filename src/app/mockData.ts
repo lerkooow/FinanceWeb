@@ -54,6 +54,15 @@ export const transactionsData: TTransaction[] = [
     type: "expense",
     icon: "💊",
   },
+  {
+    id: 6,
+    title: "Аптека",
+    category: "Здоровье",
+    amount: -300,
+    date: new Date("2024-12-07"),
+    type: "expense",
+    icon: "💊",
+  },
 ];
 
 export const total: number = 100000;
