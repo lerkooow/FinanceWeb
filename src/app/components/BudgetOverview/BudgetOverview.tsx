@@ -4,8 +4,13 @@ import { ProgressSection } from "@/app/ui/components/ProgressSection";
 import { progress, remaining, spent, total } from "@/app/mockData";
 
 import s from "./BudgetOverview.module.scss";
+import { db } from "../../../../db";
+import { UserTable } from "../../../../db/schema";
 
-export const BudgetOverview = () => {
+export const BudgetOverview = async () => {
+  const users = await db.select().from(UserTable);
+  console.log("🚀 ~ BudgetOverview ~ users:", users);
+
   return (
     <div className={s.budgetOverview}>
       <div>
