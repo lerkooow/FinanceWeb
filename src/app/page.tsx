@@ -1,7 +1,7 @@
 import { Button } from "./ui/components/Button";
 import { redirect } from "next/navigation";
 
-import { SignInButton, SignUpButton, SignedOut } from "@clerk/nextjs";
+import { SignInButton, SignUpButton, SignedOut, useUser } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 
 import s from "./page.module.scss";
@@ -23,7 +23,9 @@ export default async function Home() {
       <SignedOut>
         <div className={s.page__auth}>
           <SignUpButton mode="modal" forceRedirectUrl="/account">
-            <Button>ЗАРЕГИСТРИРОВАТЬСЯ</Button>
+            <Button iconVisible={false} className="button--primary">
+              ЗАРЕГИСТРИРОВАТЬСЯ
+            </Button>
           </SignUpButton>
 
           <SignInButton mode="modal" forceRedirectUrl="/account">
