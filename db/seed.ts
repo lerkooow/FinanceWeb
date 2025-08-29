@@ -8,6 +8,7 @@ async function seed() {
   const [user] = await db
     .insert(UserTable)
     .values({
+      clerkUserId: "user_test_123",
       name: "Valeriia",
       email: "val@example.com",
     })
