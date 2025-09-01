@@ -5,7 +5,7 @@ import { BudgetCard } from "@/app/ui/components/BudgetCard";
 import { ProgressSection } from "@/app/ui/components/ProgressSection";
 
 import { db } from "../../../../db";
-import { UserTable } from "../../../../db/schema";
+import { TransactionTable, UserTable } from "../../../../db/schema";
 
 import s from "./BudgetOverview.module.scss";
 
@@ -19,9 +19,12 @@ export const BudgetOverview = async () => {
   const dbUser = await db.select().from(UserTable).where(eq(UserTable.clerkUserId, userId)).limit(1);
 
   const user = dbUser[0];
-  console.log("🚀 ~ BudgetOverview ~ user:", user);
 
-  const progress: number = user.budget ? (0 / user.budget) * 100 : 0;
+  const dbTransaction = user ? await db.select().from(TransactionTable).where(eq(TransactionTable.userId, user.id)) : [];
+
+  const expenses = dbTransaction.filter((t) => t.type === "expense").reduce((sum, t) => sum + t.amount, 0);
+  const available = user.budget ? user.budget - expenses : 0;
+  const progress: number = user.budget ? (expenses / user.budget) * 100 : 0;
 
   return (
     <div className={s.budgetOverview}>
@@ -32,8 +35,8 @@ export const BudgetOverview = async () => {
 
       <div className={s.budgetCards}>
         <BudgetCard image="/total.svg" budget={user.budget ?? 0} className="budgetCard--total" title="Общий бюджет" />
-        <BudgetCard image="/spent.svg" budget={0} className="budgetCard--spent" title="Потрачено" />
-        <BudgetCard image="/remaining.svg" budget={0} className="budgetCard--remaining" title="Доступно" />
+        <BudgetCard image="/spent.svg" budget={expenses} className="budgetCard--spent" title="Потрачено" />
+        <BudgetCard image="/remaining.svg" budget={available} className="budgetCard--remaining" title="Доступно" />
       </div>
 
       <ProgressSection progress={progress} title="Использование бюджета" />

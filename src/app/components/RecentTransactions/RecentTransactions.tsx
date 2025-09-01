@@ -20,7 +20,6 @@ export const RecentTransactions = async () => {
 
   const user = dbUser[0];
   const dbTransaction = user ? await db.select().from(TransactionTable).where(eq(TransactionTable.userId, user.id)) : [];
-  console.log("🚀 ~ RecentTransactions ~ dbTransaction:", dbTransaction);
 
   return (
     <div className={s.recentTransactions}>

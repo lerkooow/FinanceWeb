@@ -30,7 +30,7 @@ export const TransactionItem = ({ id, type, icon, title, category, date, amount 
 
   const formatAmount = (amount: number) => {
     const formatted = Math.abs(amount).toLocaleString();
-    return amount >= 0 ? `+${formatted} ₽` : `-${formatted} ₽`;
+    return type === "income" ? `+${formatted} ₽` : `-${formatted} ₽`;
   };
 
   return (

@@ -1,8 +1,10 @@
-import { Button } from "@/app/ui/components/Button";
-import { currentUser } from "@clerk/nextjs/server";
+"use client";
 
-export const TransactionActions = async () => {
-  const clerkUser = await currentUser();
+import { useUser } from "@clerk/nextjs";
+import { Button } from "@/app/ui/components/Button";
+
+export const TransactionActions = () => {
+  const { user } = useUser();
 
   const addExpenseTransaction = async (data: { title: string; category: string; amount: number; type: "income" | "expense"; icon?: string; date?: string }) => {
     try {
@@ -60,15 +62,28 @@ export const TransactionActions = async () => {
     addExpenseTransaction({
       title: "Кофе",
       category: "Еда",
-      amount: -300,
+      amount: 300,
       type: "expense",
       icon: "☕",
     });
   };
 
-  const handleAddIncome = () => {
-    addIncomeTransaction({
-      clerkUserId: clerkUser?.id ?? "",
+  const handleAddIncome = async () => {
+    if (!user?.id) {
+      alert("Пользователь не авторизован");
+      return;
+    }
+
+    await addExpenseTransaction({
+      title: "Зарплата",
+      category: "Доход",
+      amount: 50000,
+      type: "income",
+      icon: "💰",
+    });
+
+    await addIncomeTransaction({
+      clerkUserId: user.id,
       amount: 50000,
     });
   };

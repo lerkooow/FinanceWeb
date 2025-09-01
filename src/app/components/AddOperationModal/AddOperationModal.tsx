@@ -1,3 +1,5 @@
+"use client";
+
 import { TransactionActions } from "../RecentTransactions/TransactionActions";
 import s from "./AddOperationModal.module.scss";
 
