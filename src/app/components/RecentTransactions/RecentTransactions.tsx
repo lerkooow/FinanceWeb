@@ -1,48 +1,26 @@
-"use client";
+import { auth } from "@clerk/nextjs/server";
+import { eq } from "drizzle-orm";
 
-import { useState } from "react";
-
-import { Button } from "@/app/ui/components/Button";
 import { TransactionItem } from "@/app/ui/components/TransactionItem";
+import { Button } from "@/app/ui/components/Button";
 
-import { transactionsData } from "@/app/mockData";
+import { db } from "../../../../db";
+import { TransactionTable, UserTable } from "../../../../db/schema";
 
 import s from "./RecentTransactions.module.scss";
 
-export const RecentTransactions = () => {
-  const [transactions, setTransactions] = useState(transactionsData);
+export const RecentTransactions = async () => {
+  const { userId } = await auth();
 
-  const formatDate = (date: Date) => {
-    const today = new Date();
-    const yesterday = new Date(today);
-    yesterday.setDate(yesterday.getDate() - 1);
+  if (!userId) {
+    throw new Error("User is not authenticated");
+  }
 
-    if (date.toDateString() === today.toDateString()) {
-      return "Сегодня";
-    } else if (date.toDateString() === yesterday.toDateString()) {
-      return "Вчера";
-    } else {
-      return date.toLocaleDateString("ru-RU", {
-        day: "numeric",
-        month: "short",
-      });
-    }
-  };
+  const dbUser = await db.select().from(UserTable).where(eq(UserTable.clerkUserId, userId)).limit(1);
 
-  const formatAmount = (amount: number) => {
-    const formatted = Math.abs(amount).toLocaleString();
-    return amount >= 0 ? `+${formatted} ₽` : `-${formatted} ₽`;
-  };
-
-  const handleAddExpense = () => {
-    // Здесь будет логика добавления нового расхода
-    console.log("Добавить расход");
-  };
-
-  const handleAddIncome = () => {
-    // Здесь будет логика добавления нового дохода
-    console.log("Добавить доход");
-  };
+  const user = dbUser[0];
+  const dbTransaction = user ? await db.select().from(TransactionTable).where(eq(TransactionTable.userId, user.id)) : [];
+  console.log("🚀 ~ RecentTransactions ~ dbTransaction:", dbTransaction);
 
   return (
     <div className={s.recentTransactions}>
@@ -51,28 +29,23 @@ export const RecentTransactions = () => {
           <h2 className={s.recentTransactions__title}>Последние операции</h2>
           <p className={s.recentTransactions__subtitle}>Ваши недавние доходы и расходы</p>
         </div>
-        <Button className="button--income" icon="plus.svg">
-          Добавить доходы
-        </Button>
-        <Button className="button--expense" icon="minus.svg">
-          Добавить расходы
+        <Button className="button--primary" icon="/plus.svg">
+          Добавить операцию
         </Button>
       </div>
 
       <div className={s.recentTransactions__transactionsList}>
-        {transactions.length > 0 ? (
-          transactions.map((transaction) => (
+        {dbTransaction.length > 0 ? (
+          dbTransaction.map((transaction) => (
             <TransactionItem
               key={transaction.id}
               id={transaction.id}
-              type={transaction.type}
+              type={transaction.type as "expense" | "income"}
               icon={transaction.icon}
               title={transaction.title}
               category={transaction.category}
               date={transaction.date}
               amount={transaction.amount}
-              formatDate={formatDate}
-              formatAmount={formatAmount}
             />
           ))
         ) : (

@@ -8,11 +8,31 @@ type TTransactionItemProps = {
   category: string;
   date: Date;
   amount: number;
-  formatDate: (date: Date) => string;
-  formatAmount: (amount: number) => string;
 };
 
-export const TransactionItem = ({ id, type, icon, title, category, date, amount, formatDate, formatAmount }: TTransactionItemProps) => {
+export const TransactionItem = ({ id, type, icon, title, category, date, amount }: TTransactionItemProps) => {
+  const formatDate = (date: Date) => {
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    if (date.toDateString() === today.toDateString()) {
+      return "Сегодня";
+    } else if (date.toDateString() === yesterday.toDateString()) {
+      return "Вчера";
+    } else {
+      return date.toLocaleDateString("ru-RU", {
+        day: "numeric",
+        month: "short",
+      });
+    }
+  };
+
+  const formatAmount = (amount: number) => {
+    const formatted = Math.abs(amount).toLocaleString();
+    return amount >= 0 ? `+${formatted} ₽` : `-${formatted} ₽`;
+  };
+
   return (
     <div key={id} className={`${s.transactionItem} ${type === "expense" ? s["transactionItem--expense"] : s["transactionItem--income"]}`}>
       <div className={s.transactionItem__transactionContent}>

@@ -3,11 +3,11 @@ import { redirect } from "next/navigation";
 import { createOrGetUser } from "../../lib/user";
 
 import { BudgetOverview } from "../components/BudgetOverview";
-import { ExpenseCharts } from "../components/ExpenseCharts/ExpenseCharts";
+// import { ExpenseCharts } from "../components/ExpenseCharts/ExpenseCharts";
 import { RecentTransactions } from "../components/RecentTransactions";
-import { UserInfo } from "../components/UserInfo";
 
 import s from "./page.module.scss";
+import { AddOperationModal } from "../components/AddOperationModal";
 
 export default async function page() {
   const { userId } = await auth();
@@ -24,10 +24,10 @@ export default async function page() {
 
   return (
     <div className={s.page}>
-      <UserInfo />
       <BudgetOverview />
       <RecentTransactions />
-      <ExpenseCharts />
+      {/* <ExpenseCharts /> */}
+      <AddOperationModal />
     </div>
   );
 }

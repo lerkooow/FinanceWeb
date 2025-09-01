@@ -4,7 +4,7 @@ import s from "./BudgetCard.module.scss";
 
 type TBudgetCardProps = {
   image: string;
-  budget?: number;
+  budget: number;
   className: string;
   title?: string;
 };

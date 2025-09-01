@@ -1,0 +1,58 @@
+.addOperationModal {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow:
+    0 20px 40px rgba(65, 65, 83, 0.08),
+    0 4px 16px rgba(0, 0, 0, 0.04);
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  border: 1px solid rgba(65, 65, 83, 0.06);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #414153 0%, #2c48ff 100%);
+  }
+
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    position: relative;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  &__headerContent {
+    flex: 1;
+    min-width: 200px;
+  }
+
+  &__title {
+    font-size: clamp(28px, 3.5vw, 36px);
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 8px 0;
+    background: linear-gradient(135deg, #1a1a1a 0%, #414153 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  &__subtitle {
+    font-size: 16px;
+    color: #6b7280;
+    margin: 0;
+    font-weight: 400;
+  }
+}

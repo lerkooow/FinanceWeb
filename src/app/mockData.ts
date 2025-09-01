@@ -68,5 +68,3 @@ export const transactionsData: TTransaction[] = [
 export const total: number = 100000;
 export const spent: number = 24563;
 export const remaining: number = total - spent;
-
-export const progress: number = (spent / total) * 100;
