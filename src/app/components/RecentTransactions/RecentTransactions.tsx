@@ -8,6 +8,7 @@ import { db } from "../../../../db";
 import { TransactionTable, UserTable } from "../../../../db/schema";
 
 import s from "./RecentTransactions.module.scss";
+import { HeaderTransactions } from "./HeaderTransactions";
 
 export const RecentTransactions = async () => {
   const { userId } = await auth();
@@ -23,15 +24,7 @@ export const RecentTransactions = async () => {
 
   return (
     <div className={s.recentTransactions}>
-      <div className={s.recentTransactions__header}>
-        <div className={s.recentTransactions__headerContent}>
-          <h2 className={s.recentTransactions__title}>Последние операции</h2>
-          <p className={s.recentTransactions__subtitle}>Ваши недавние доходы и расходы</p>
-        </div>
-        <Button className="button--primary" icon="/plus.svg">
-          Добавить операцию
-        </Button>
-      </div>
+      <HeaderTransactions />
 
       <div className={s.recentTransactions__transactionsList}>
         {dbTransaction.length > 0 ? (

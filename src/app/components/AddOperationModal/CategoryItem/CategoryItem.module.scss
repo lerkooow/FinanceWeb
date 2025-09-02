@@ -1,0 +1,39 @@
+.categoryItem {
+  &__iconGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 16px;
+  }
+
+  &__iconButton {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px;
+    border-radius: 16px;
+    border: 2px solid #e5e7eb;
+    transition: all 0.3s;
+    cursor: pointer;
+    background-color: transparent;
+    color: #000;
+
+    &.selectedIncome {
+      border-color: #16a34a;
+      background-color: #d1fae5;
+      color: #16a34a;
+    }
+
+    &.selectedExpense {
+      border-color: #ef4444;
+      background-color: #fee2e2;
+      color: #ef4444;
+    }
+
+    &:hover {
+      transform: scale(1.05);
+      border-color: #d1d5db;
+      background-color: #e5e7eb;
+      color: #000;
+    }
+  }
+}

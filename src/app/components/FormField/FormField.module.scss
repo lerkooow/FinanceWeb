@@ -1,0 +1,11 @@
+.formField {
+  &__inputWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__inputRequired {
+    color: #ef4444;
+  }
+}

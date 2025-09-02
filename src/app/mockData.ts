@@ -1,70 +1,33 @@
-type TTransaction = {
-  id: number;
-  title: string;
-  category: string;
-  amount: number;
-  date: Date;
-  type: "income" | "expense";
-  icon: string;
+import { DollarSign, ShoppingCart, Car, Home, Coffee, Gamepad2, Gift, Plane, Book, Music, Heart, Briefcase, Calculator, CreditCard, Wallet, PiggyBank, TrendingUp, TrendingDown } from "lucide-react";
+
+import { LucideIcon } from "lucide-react";
+
+export type TIcons = {
+  name: string;
+  icon: LucideIcon;
+  label: string;
 };
 
-export const transactionsData: TTransaction[] = [
-  {
-    id: 1,
-    title: "Продукты в Пятёрочке",
-    category: "Продукты",
-    amount: -2450,
-    date: new Date("2024-12-15"),
-    type: "expense",
-    icon: "🛒",
-  },
-  {
-    id: 2,
-    title: "Заправка автомобиля",
-    category: "Транспорт",
-    amount: -3200,
-    date: new Date("2024-12-14"),
-    type: "expense",
-    icon: "⛽",
-  },
-  {
-    id: 3,
-    title: "Кофе в Starbucks",
-    category: "Кафе и рестораны",
-    amount: -320,
-    date: new Date("2024-12-14"),
-    type: "expense",
-    icon: "☕",
-  },
-  {
-    id: 4,
-    title: "Зарплата",
-    category: "Доход",
-    amount: 85000,
-    date: new Date("2024-12-10"),
-    type: "income",
-    icon: "💰",
-  },
-  {
-    id: 5,
-    title: "Аптека",
-    category: "Здоровье",
-    amount: -890,
-    date: new Date("2024-12-09"),
-    type: "expense",
-    icon: "💊",
-  },
-  {
-    id: 6,
-    title: "Аптека",
-    category: "Здоровье",
-    amount: -300,
-    date: new Date("2024-12-07"),
-    type: "expense",
-    icon: "💊",
-  },
+export const incomeIcons: TIcons[] = [
+  { name: "DollarSign", icon: DollarSign, label: "Зарплата" },
+  { name: "Briefcase", icon: Briefcase, label: "Работа" },
+  { name: "TrendingUp", icon: TrendingUp, label: "Инвестиции" },
+  { name: "Gift", icon: Gift, label: "Подарок" },
+  { name: "PiggyBank", icon: PiggyBank, label: "Накопления" },
+  { name: "CreditCard", icon: CreditCard, label: "Бонусы" },
 ];
 
-export const total: number = 100000;
-export const spent: number = 24563;
-export const remaining: number = total - spent;
+export const expenseIcons: TIcons[] = [
+  { name: "ShoppingCart", icon: ShoppingCart, label: "Покупки" },
+  { name: "Car", icon: Car, label: "Транспорт" },
+  { name: "Home", icon: Home, label: "Дом" },
+  { name: "Coffee", icon: Coffee, label: "Кафе" },
+  { name: "Gamepad2", icon: Gamepad2, label: "Развлечения" },
+  { name: "Plane", icon: Plane, label: "Путешествия" },
+  { name: "Book", icon: Book, label: "Образование" },
+  { name: "Music", icon: Music, label: "Подписки" },
+  { name: "Heart", icon: Heart, label: "Здоровье" },
+  { name: "Calculator", icon: Calculator, label: "Услуги" },
+  { name: "Wallet", icon: Wallet, label: "Прочее" },
+  { name: "TrendingDown", icon: TrendingDown, label: "Долги" },
+];
