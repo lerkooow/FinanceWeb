@@ -2,7 +2,11 @@
   &__iconGrid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-    gap: 16px;
+    gap: 8px;
+    max-height: 150px;
+    width: 100%;
+    overflow: auto;
+    margin-top: 8px;
   }
 
   &__iconButton {
@@ -29,10 +33,9 @@
       color: #ef4444;
     }
 
-    &:hover {
-      transform: scale(1.05);
-      border-color: #d1d5db;
-      background-color: #e5e7eb;
+    &:not(.selectedIncome):not(.selectedExpense):hover {
+      border-color: #a6a9ac;
+      background-color: #fff;
       color: #000;
     }
   }

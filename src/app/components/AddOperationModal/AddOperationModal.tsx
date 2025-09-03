@@ -27,7 +27,7 @@ export const AddOperationModal = () => {
   const [amount, setAmount] = useState(0);
   const [category, setCategory] = useState("");
 
-  const addExpenseTransaction = async (data: { title: string; category: string; amount: number; type: "income" | "expense"; icon?: string; date?: string }) => {
+  const addExpenseTransaction = async (data: { title: string; category: string; amount: number; type: "income" | "expense"; icon?: string; date?: string; description?: string }) => {
     try {
       const res = await fetch("/api/transactions", {
         method: "POST",
@@ -85,7 +85,8 @@ export const AddOperationModal = () => {
       category: category,
       amount: amount,
       type: operationType,
-      icon: "☕",
+      icon: selectedIcon,
+      description: description,
     });
 
     closeModal();
@@ -102,6 +103,8 @@ export const AddOperationModal = () => {
       category: category,
       amount: amount,
       type: operationType,
+      icon: selectedIcon,
+      description: description,
     });
 
     await addIncomeTransaction({
@@ -172,7 +175,7 @@ export const AddOperationModal = () => {
                     rows={2}
                   />
 
-                  <FormField label="Сумма" required type="number" value={amount} setValue={(val: string) => setAmount(Number(val))} placeholder="0.00" className={s.addOperationModal__inputField} />
+                  <FormField label="Сумма" required type="text" value={amount} setValue={(val: string) => setAmount(Number(val))} placeholder="0.00" className={s.addOperationModal__inputField} />
                 </div>
               </form>
             </div>

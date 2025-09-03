@@ -14,7 +14,7 @@ export const HeaderTransactions = () => {
         <h2 className={s.recentTransactions__title}>Последние операции</h2>
         <p className={s.recentTransactions__subtitle}>Ваши недавние доходы и расходы</p>
       </div>
-      <Button className="button--primary" icon="/plus.svg" onClick={openModal}>
+      <Button className={s.recentTransactions__primary} icon="/plus.svg" onClick={openModal}>
         Добавить операцию
       </Button>
     </div>

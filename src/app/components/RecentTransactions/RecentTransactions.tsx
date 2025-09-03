@@ -2,13 +2,13 @@ import { auth } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
 
 import { TransactionItem } from "@/app/ui/components/TransactionItem";
-import { Button } from "@/app/ui/components/Button";
 
 import { db } from "../../../../db";
 import { TransactionTable, UserTable } from "../../../../db/schema";
+import { HeaderTransactions } from "./HeaderTransactions";
 
 import s from "./RecentTransactions.module.scss";
-import { HeaderTransactions } from "./HeaderTransactions";
+import { categoryIcons } from "@/app/mockData";
 
 export const RecentTransactions = async () => {
   const { userId } = await auth();
@@ -18,9 +18,10 @@ export const RecentTransactions = async () => {
   }
 
   const dbUser = await db.select().from(UserTable).where(eq(UserTable.clerkUserId, userId)).limit(1);
-
   const user = dbUser[0];
   const dbTransaction = user ? await db.select().from(TransactionTable).where(eq(TransactionTable.userId, user.id)) : [];
+
+  console.log("🚀 ~ RecentTransactions ~ dbTransaction:", dbTransaction);
 
   return (
     <div className={s.recentTransactions}>
@@ -28,18 +29,22 @@ export const RecentTransactions = async () => {
 
       <div className={s.recentTransactions__transactionsList}>
         {dbTransaction.length > 0 ? (
-          dbTransaction.map((transaction) => (
-            <TransactionItem
-              key={transaction.id}
-              id={transaction.id}
-              type={transaction.type as "expense" | "income"}
-              icon={transaction.icon}
-              title={transaction.title}
-              category={transaction.category}
-              date={transaction.date}
-              amount={transaction.amount}
-            />
-          ))
+          dbTransaction.map((transaction) => {
+            const IconComponent = categoryIcons[transaction.icon as keyof typeof categoryIcons];
+
+            return (
+              <TransactionItem
+                key={transaction.id}
+                id={transaction.id}
+                type={transaction.type as "expense" | "income"}
+                icon={IconComponent ? <IconComponent width={24} height={24} /> : null}
+                title={transaction.title}
+                category={transaction.category}
+                date={transaction.date}
+                amount={transaction.amount}
+              />
+            );
+          })
         ) : (
           <div className={s.recentTransactions__emptyState}>
             <div className={s.recentTransactions__emptyIcon}>📊</div>

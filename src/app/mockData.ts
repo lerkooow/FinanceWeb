@@ -1,33 +1,50 @@
-import { DollarSign, ShoppingCart, Car, Home, Coffee, Gamepad2, Gift, Plane, Book, Music, Heart, Briefcase, Calculator, CreditCard, Wallet, PiggyBank, TrendingUp, TrendingDown } from "lucide-react";
-
-import { LucideIcon } from "lucide-react";
+import { Book, Calculator, Car, Coffee, CreditCard, DollarSign, Gamepad2, Gift, Heart, Music, PiggyBank, Plane, ShoppingCart, TrendingDown, TrendingUp, Wallet } from "lucide-react";
+import Home from "./page";
 
 export type TIcons = {
   name: string;
-  icon: LucideIcon;
   label: string;
 };
 
 export const incomeIcons: TIcons[] = [
-  { name: "DollarSign", icon: DollarSign, label: "Зарплата" },
-  { name: "Briefcase", icon: Briefcase, label: "Работа" },
-  { name: "TrendingUp", icon: TrendingUp, label: "Инвестиции" },
-  { name: "Gift", icon: Gift, label: "Подарок" },
-  { name: "PiggyBank", icon: PiggyBank, label: "Накопления" },
-  { name: "CreditCard", icon: CreditCard, label: "Бонусы" },
+  { name: "DOLLAR", label: "Зарплата" },
+  { name: "INVESTMENTS", label: "Инвестиции" },
+  { name: "GIFT", label: "Подарок" },
+  { name: "PIGGY_BANK", label: "Накопления" },
+  { name: "CREDIT_CARD", label: "Бонусы" },
 ];
 
 export const expenseIcons: TIcons[] = [
-  { name: "ShoppingCart", icon: ShoppingCart, label: "Покупки" },
-  { name: "Car", icon: Car, label: "Транспорт" },
-  { name: "Home", icon: Home, label: "Дом" },
-  { name: "Coffee", icon: Coffee, label: "Кафе" },
-  { name: "Gamepad2", icon: Gamepad2, label: "Развлечения" },
-  { name: "Plane", icon: Plane, label: "Путешествия" },
-  { name: "Book", icon: Book, label: "Образование" },
-  { name: "Music", icon: Music, label: "Подписки" },
-  { name: "Heart", icon: Heart, label: "Здоровье" },
-  { name: "Calculator", icon: Calculator, label: "Услуги" },
-  { name: "Wallet", icon: Wallet, label: "Прочее" },
-  { name: "TrendingDown", icon: TrendingDown, label: "Долги" },
+  { name: "GROCERY", label: "Продукты" },
+  { name: "CAR", label: "Транспорт" },
+  { name: "HOME", label: "Дом" },
+  { name: "COFFEE", label: "Кафе" },
+  { name: "ENTERTAINMENT", label: "Развлечения" },
+  { name: "PLANE", label: "Путешествия" },
+  { name: "BOOK", label: "Образование" },
+  { name: "MUSIC", label: "Подписки" },
+  { name: "HEART", label: "Здоровье" },
+  { name: "CALCULATOR", label: "Услуги" },
+  { name: "WALLET", label: "Прочее" },
+  { name: "TRENDING_DOWN", label: "Долги" },
 ];
+
+export const categoryIcons = {
+  DOLLAR: DollarSign,
+  INVESTMENTS: TrendingUp,
+  GIFT: Gift,
+  PIGGY_BANK: PiggyBank,
+  CREDIT_CARD: CreditCard,
+  GROCERY: ShoppingCart,
+  CAR: Car,
+  HOME: Home,
+  COFFEE: Coffee,
+  GAMEPAD2: Gamepad2,
+  PLANE: Plane,
+  BOOK: Book,
+  MUSIC: Music,
+  HEART: Heart,
+  CALCULATOR: Calculator,
+  WALLET: Wallet,
+  TRENDING_DOWN: TrendingDown,
+};

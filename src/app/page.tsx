@@ -1,7 +1,7 @@
 import { Button } from "./ui/components/Button";
 import { redirect } from "next/navigation";
 
-import { SignInButton, SignUpButton, SignedOut, useUser } from "@clerk/nextjs";
+import { SignInButton, SignUpButton, SignedOut } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 
 import s from "./page.module.scss";
