@@ -5,18 +5,22 @@ import { Trash } from "lucide-react";
 import { deleteTransactionAction } from "@/app/actions/transactions";
 
 import s from "./TransactionItem.module.scss";
+import { useEditModalStore } from "../../../../../stores/modalStore";
 
 type TTransactionItemProps = {
   id: number;
   type: "expense" | "income";
   icon: React.ReactNode;
+  iconName: string;
   title: string;
   category: string;
   date: Date;
   amount: number;
+  setSelectedTransaction: (transaction: any) => void;
+  openModal: () => void;
 };
 
-export const TransactionItem = ({ id, type, icon, title, category, date, amount }: TTransactionItemProps) => {
+export const TransactionItem = ({ id, type, icon, iconName, title, category, date, amount, setSelectedTransaction, openModal }: TTransactionItemProps) => {
   const handleDelete = async () => {
     try {
       await deleteTransactionAction(id);
@@ -49,7 +53,14 @@ export const TransactionItem = ({ id, type, icon, title, category, date, amount 
   };
 
   return (
-    <div key={id} className={`${s.transactionItem} ${type === "expense" ? s["transactionItem--expense"] : s["transactionItem--income"]}`}>
+    <div
+      key={id}
+      className={`${s.transactionItem} ${type === "expense" ? s["transactionItem--expense"] : s["transactionItem--income"]}`}
+      onClick={() => {
+        setSelectedTransaction({ id, type, icon: iconName, title, category, date, amount });
+        openModal();
+      }}
+    >
       <div className={s.transactionItem__transactionContent}>
         <div className={s.transactionItem__transactionInfo}>
           <div className={s.transactionItem__transactionIcon}>{icon}</div>

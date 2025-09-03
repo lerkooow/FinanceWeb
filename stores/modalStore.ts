@@ -21,3 +21,31 @@ export const useModalStore = create<ModalState>()(
     }
   )
 );
+
+type TTransaction = {
+  id: number;
+  type: "expense" | "income";
+  icon: string;
+  title: string;
+  category: string;
+  date: Date;
+  amount: number;
+};
+
+interface EditModalState {
+  isEditOperationOpen: boolean;
+  openModal: () => void;
+  closeModal: () => void;
+  toggleModal: () => void;
+  selectedTransaction: TTransaction | null;
+  setSelectedTransaction: (transaction: TTransaction) => void;
+}
+
+export const useEditModalStore = create<EditModalState>()((set) => ({
+  isEditOperationOpen: false,
+  openModal: () => set({ isEditOperationOpen: true }),
+  closeModal: () => set({ isEditOperationOpen: false }),
+  toggleModal: () => set((state) => ({ isEditOperationOpen: !state.isEditOperationOpen })),
+  selectedTransaction: null,
+  setSelectedTransaction: (transaction: TTransaction) => set({ selectedTransaction: transaction }),
+}));

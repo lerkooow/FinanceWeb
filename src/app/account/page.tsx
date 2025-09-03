@@ -1,13 +1,11 @@
-import { auth, currentUser } from "@clerk/nextjs/server";
+import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-import { createOrGetUser } from "../../lib/user";
 
 import { BudgetOverview } from "../components/BudgetOverview";
-// import { ExpenseCharts } from "../components/ExpenseCharts/ExpenseCharts";
-import { RecentTransactions } from "../components/RecentTransactions";
 
 import s from "./page.module.scss";
 import { AddOperationModal } from "../components/AddOperationModal";
+import { RecentTransactionsServer } from "../components/RecentTransactions/RecentTransactionsServer/RecentTransactionsServer";
 
 export default async function page() {
   const { userId } = await auth();
@@ -16,17 +14,16 @@ export default async function page() {
     redirect("/");
   }
 
-  const user = await currentUser();
+  // const user = await currentUser();
 
-  if (user) {
-    await createOrGetUser(user.id, user.emailAddresses[0]?.emailAddress || "", user.firstName && user.lastName ? `${user.firstName} ${user.lastName}` : user.username || "Пользователь");
-  }
+  // if (user) {
+  //   await createOrGetUser(user.id, user.emailAddresses[0]?.emailAddress || "", user.firstName && user.lastName ? `${user.firstName} ${user.lastName}` : user.username || "Пользователь");
+  // }
 
   return (
     <div className={s.page}>
       <BudgetOverview />
-      <RecentTransactions />
-      {/* <ExpenseCharts /> */}
+      <RecentTransactionsServer />
       <AddOperationModal />
     </div>
   );

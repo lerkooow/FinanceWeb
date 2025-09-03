@@ -1,9 +1,8 @@
 "use client";
-import { useModalStore } from "../../../../stores/modalStore";
 
 import { Button } from "@/app/ui/components/Button";
-
-import s from "./RecentTransactions.module.scss";
+import { useModalStore } from "../../../../stores/modalStore";
+import s from "./RecentTransactionsList/RecentTransactionsList.module.scss";
 
 export const HeaderTransactions = () => {
   const { openModal } = useModalStore();
