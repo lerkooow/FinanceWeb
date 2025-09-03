@@ -1,5 +1,24 @@
-import { Book, Calculator, Car, Coffee, CreditCard, DollarSign, Gamepad2, Gift, Heart, Music, PiggyBank, Plane, ShoppingCart, TrendingDown, TrendingUp, Wallet } from "lucide-react";
-import Home from "./page";
+import { Book, Calculator, Car, Coffee, CreditCard, DollarSign, Gamepad2, Gift, Heart, Home, Music, PiggyBank, Plane, ShoppingCart, TrendingDown, TrendingUp, Wallet } from "lucide-react";
+
+export const categoryIcons = {
+  DOLLAR: DollarSign,
+  INVESTMENTS: TrendingUp,
+  GIFT: Gift,
+  PIGGY_BANK: PiggyBank,
+  CREDIT_CARD: CreditCard,
+  GROCERY: ShoppingCart,
+  CAR: Car,
+  HOME: Home,
+  COFFEE: Coffee,
+  ENTERTAINMENT: Gamepad2,
+  PLANE: Plane,
+  BOOK: Book,
+  MUSIC: Music,
+  HEART: Heart,
+  CALCULATOR: Calculator,
+  WALLET: Wallet,
+  TRENDING_DOWN: TrendingDown,
+};
 
 export type TIcons = {
   name: string;
@@ -28,23 +47,3 @@ export const expenseIcons: TIcons[] = [
   { name: "WALLET", label: "Прочее" },
   { name: "TRENDING_DOWN", label: "Долги" },
 ];
-
-export const categoryIcons = {
-  DOLLAR: DollarSign,
-  INVESTMENTS: TrendingUp,
-  GIFT: Gift,
-  PIGGY_BANK: PiggyBank,
-  CREDIT_CARD: CreditCard,
-  GROCERY: ShoppingCart,
-  CAR: Car,
-  HOME: Home,
-  COFFEE: Coffee,
-  GAMEPAD2: Gamepad2,
-  PLANE: Plane,
-  BOOK: Book,
-  MUSIC: Music,
-  HEART: Heart,
-  CALCULATOR: Calculator,
-  WALLET: Wallet,
-  TRENDING_DOWN: TrendingDown,
-};

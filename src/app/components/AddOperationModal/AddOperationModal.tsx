@@ -55,30 +55,6 @@ export const AddOperationModal = () => {
     }
   };
 
-  const addIncomeTransaction = async (data: { clerkUserId: string; amount: number }) => {
-    try {
-      const res = await fetch("/api/users", {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-
-      if (!res.ok) {
-        const error = await res.json();
-        throw new Error(error.error || "Ошибка при обновлении бюджета");
-      }
-
-      const json = await res.json();
-      console.log("Бюджет обновлён:", json);
-
-      window.location.reload();
-      return json;
-    } catch (err) {
-      console.error(err);
-      alert("Ошибка при обновлении бюджета");
-    }
-  };
-
   const handleAddExpense = () => {
     addExpenseTransaction({
       title: title,
@@ -105,11 +81,6 @@ export const AddOperationModal = () => {
       type: operationType,
       icon: selectedIcon,
       description: description,
-    });
-
-    await addIncomeTransaction({
-      clerkUserId: user.id,
-      amount: amount,
     });
 
     closeModal();

@@ -6,7 +6,6 @@ export const UserTable = pgTable("user", {
   clerkUserId: text("clerk_user_id").unique(),
   name: text("name").notNull(),
   email: text("email").notNull().unique(),
-  budget: integer("budget").default(0),
 });
 
 export const TransactionTable = pgTable("transaction", {

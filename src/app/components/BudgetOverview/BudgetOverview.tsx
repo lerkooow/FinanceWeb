@@ -21,10 +21,11 @@ export const BudgetOverview = async () => {
   const user = dbUser[0];
 
   const dbTransaction = user ? await db.select().from(TransactionTable).where(eq(TransactionTable.userId, user.id)) : [];
+  const income = dbTransaction.filter((t) => t.type === "income").reduce((sum, t) => sum + t.amount, 0);
 
   const expenses = dbTransaction.filter((t) => t.type === "expense").reduce((sum, t) => sum + t.amount, 0);
-  const available = user.budget ? user.budget - expenses : 0;
-  const progress: number = user.budget ? (expenses / user.budget) * 100 : 0;
+  const available = income - expenses;
+  const progress = income === 0 ? 0 : Math.min((expenses / income) * 100, 100);
 
   return (
     <div className={s.budgetOverview}>
@@ -34,7 +35,7 @@ export const BudgetOverview = async () => {
       </div>
 
       <div className={s.budgetCards}>
-        <BudgetCard image="/total.svg" budget={user.budget ?? 0} className="budgetCard--total" title="Общий бюджет" />
+        <BudgetCard image="/total.svg" budget={income} className="budgetCard--total" title="Общий бюджет" />
         <BudgetCard image="/spent.svg" budget={expenses} className="budgetCard--spent" title="Потрачено" />
         <BudgetCard image="/remaining.svg" budget={available} className="budgetCard--remaining" title="Доступно" />
       </div>
