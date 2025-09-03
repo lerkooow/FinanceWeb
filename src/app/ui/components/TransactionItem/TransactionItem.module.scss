@@ -7,6 +7,7 @@
     0 2px 8px rgba(0, 0, 0, 0.02);
   border: 1px solid rgba(65, 65, 83, 0.08);
   display: flex;
+  justify-content: space-between;
   align-items: center;
   gap: 20px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -109,11 +110,23 @@
 
   &__deleteIcon {
     cursor: pointer;
-    margin-left: 12px;
 
     &:hover {
       color: #ef4444;
     }
+  }
+
+  &__editIcon {
+    cursor: pointer;
+
+    &:hover {
+      color: #2c48ff;
+    }
+  }
+
+  &__transactionAction {
+    display: flex;
+    gap: 12px;
   }
 
   @media (max-width: 768px) {

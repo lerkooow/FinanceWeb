@@ -60,3 +60,41 @@ export const addTransactionAction = async (data: { title: string; category: stri
 
   return newTransaction;
 };
+
+export const updateTransactionAction = async (
+  transactionId: number,
+  data: { title: string; category: string; amount: number; type: "income" | "expense"; icon?: string; date?: string; description?: string }
+) => {
+  const { userId } = await auth();
+
+  if (!userId) {
+    throw new Error("User is not authenticated");
+  }
+
+  const dbUser = await db.select().from(UserTable).where(eq(UserTable.clerkUserId, userId)).limit(1);
+  const user = dbUser[0];
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  const [updatedTransaction] = await db
+    .update(TransactionTable)
+    .set({
+      title: data.title,
+      category: data.category,
+      amount: data.amount,
+      type: data.type,
+      icon: data.icon,
+      date: data.date ? new Date(data.date) : new Date(),
+      description: data.description || null,
+    })
+    .where(and(eq(TransactionTable.id, transactionId), eq(TransactionTable.userId, user.id)))
+    .returning();
+
+  revalidatePath("/account");
+
+  console.log("Транзакция обновлена:", updatedTransaction);
+
+  return updatedTransaction;
+};

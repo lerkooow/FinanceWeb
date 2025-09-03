@@ -1,11 +1,10 @@
 "use client";
 
-import { Trash } from "lucide-react";
+import { Trash, Pencil } from "lucide-react";
 
 import { deleteTransactionAction } from "@/app/actions/transactions";
 
 import s from "./TransactionItem.module.scss";
-import { useEditModalStore } from "../../../../../stores/modalStore";
 
 type TTransactionItemProps = {
   id: number;
@@ -53,14 +52,7 @@ export const TransactionItem = ({ id, type, icon, iconName, title, category, dat
   };
 
   return (
-    <div
-      key={id}
-      className={`${s.transactionItem} ${type === "expense" ? s["transactionItem--expense"] : s["transactionItem--income"]}`}
-      onClick={() => {
-        setSelectedTransaction({ id, type, icon: iconName, title, category, date, amount });
-        openModal();
-      }}
-    >
+    <div key={id} className={`${s.transactionItem} ${type === "expense" ? s["transactionItem--expense"] : s["transactionItem--income"]}`}>
       <div className={s.transactionItem__transactionContent}>
         <div className={s.transactionItem__transactionInfo}>
           <div className={s.transactionItem__transactionIcon}>{icon}</div>
@@ -74,7 +66,16 @@ export const TransactionItem = ({ id, type, icon, iconName, title, category, dat
       <div className={`${s.transactionItem__transactionAmount} ${type === "expense" ? s["transactionItem__transactionAmount--expense"] : s["transactionItem__transactionAmount--income"]}`}>
         {formatAmount(amount)}
       </div>
-      <Trash className={`${s.transactionItem__deleteIcon}`} onClick={handleDelete} />
+      <div className={s.transactionItem__transactionAction}>
+        <Pencil
+          onClick={() => {
+            setSelectedTransaction({ id, type, icon: iconName, title, category, date, amount });
+            openModal();
+          }}
+          className={s.transactionItem__editIcon}
+        />
+        <Trash className={s.transactionItem__deleteIcon} onClick={handleDelete} />
+      </div>
     </div>
   );
 };
