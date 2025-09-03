@@ -1,3 +1,9 @@
+"use client";
+
+import { Trash } from "lucide-react";
+
+import { deleteTransactionAction } from "@/app/actions/transactions";
+
 import s from "./TransactionItem.module.scss";
 
 type TTransactionItemProps = {
@@ -11,6 +17,15 @@ type TTransactionItemProps = {
 };
 
 export const TransactionItem = ({ id, type, icon, title, category, date, amount }: TTransactionItemProps) => {
+  const handleDelete = async () => {
+    try {
+      await deleteTransactionAction(id);
+    } catch (error) {
+      console.error("Ошибка при удалении транзакции:", error);
+      alert("Ошибка при удалении транзакции");
+    }
+  };
+
   const formatDate = (date: Date) => {
     const today = new Date();
     const yesterday = new Date(today);
@@ -48,6 +63,7 @@ export const TransactionItem = ({ id, type, icon, title, category, date, amount 
       <div className={`${s.transactionItem__transactionAmount} ${type === "expense" ? s["transactionItem__transactionAmount--expense"] : s["transactionItem__transactionAmount--income"]}`}>
         {formatAmount(amount)}
       </div>
+      <Trash className={`${s.transactionItem__deleteIcon}`} onClick={handleDelete} />
     </div>
   );
 };

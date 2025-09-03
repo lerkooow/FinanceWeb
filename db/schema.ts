@@ -8,7 +8,7 @@ export const UserTable = pgTable("user", {
   email: text("email").notNull().unique(),
 });
 
-export const TransactionTable = pgTable("transaction", {
+export const TransactionTable = pgTable("transactions", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
   category: text("category").notNull(),
@@ -19,6 +19,7 @@ export const TransactionTable = pgTable("transaction", {
   userId: integer("user_id")
     .notNull()
     .references(() => UserTable.id, { onDelete: "cascade" }),
+  description: text("description"),
 });
 
 export const usersRelations = relations(UserTable, ({ many }) => ({

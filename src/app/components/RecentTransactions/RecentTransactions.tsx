@@ -2,13 +2,13 @@ import { auth } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
 
 import { TransactionItem } from "@/app/ui/components/TransactionItem";
-
-import { db } from "../../../../db";
-import { TransactionTable, UserTable } from "../../../../db/schema";
 import { HeaderTransactions } from "./HeaderTransactions";
 
-import s from "./RecentTransactions.module.scss";
+import { db } from "../../../../db";
 import { categoryIcons } from "@/app/mockData";
+import { TransactionTable, UserTable } from "../../../../db/schema";
+
+import s from "./RecentTransactions.module.scss";
 
 export const RecentTransactions = async () => {
   const { userId } = await auth();
@@ -20,8 +20,6 @@ export const RecentTransactions = async () => {
   const dbUser = await db.select().from(UserTable).where(eq(UserTable.clerkUserId, userId)).limit(1);
   const user = dbUser[0];
   const dbTransaction = user ? await db.select().from(TransactionTable).where(eq(TransactionTable.userId, user.id)) : [];
-
-  console.log("🚀 ~ RecentTransactions ~ dbTransaction:", dbTransaction);
 
   return (
     <div className={s.recentTransactions}>

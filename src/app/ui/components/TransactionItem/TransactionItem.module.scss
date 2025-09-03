@@ -107,6 +107,15 @@
     }
   }
 
+  &__deleteIcon {
+    cursor: pointer;
+    margin-left: 12px;
+
+    &:hover {
+      color: #ef4444;
+    }
+  }
+
   @media (max-width: 768px) {
     padding: 20px;
     flex-wrap: wrap;

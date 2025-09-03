@@ -4,8 +4,6 @@ import { useEffect, useState } from "react";
 
 import Image from "next/image";
 
-import { useUser } from "@clerk/nextjs";
-
 import { OperationButton } from "./OperationButton";
 import { FormField } from "../FormField";
 import { CategoryItem } from "./CategoryItem";
@@ -15,10 +13,10 @@ import { useModalStore } from "../../../../stores/modalStore";
 import { expenseIcons, incomeIcons } from "@/app/mockData";
 
 import s from "./AddOperationModal.module.scss";
+import { addTransactionAction } from "@/app/actions/transactions";
 
 export const AddOperationModal = () => {
   const { isAddOperationOpen, closeModal } = useModalStore();
-  const { user } = useUser();
 
   const [operationType, setOperationType] = useState<"expense" | "income">("expense");
   const [selectedIcon, setSelectedIcon] = useState("DollarSign");
@@ -27,54 +25,8 @@ export const AddOperationModal = () => {
   const [amount, setAmount] = useState(0);
   const [category, setCategory] = useState("");
 
-  const addExpenseTransaction = async (data: { title: string; category: string; amount: number; type: "income" | "expense"; icon?: string; date?: string; description?: string }) => {
-    try {
-      const res = await fetch("/api/transactions", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...data,
-          date: data.date || new Date().toISOString(),
-        }),
-      });
-
-      if (!res.ok) {
-        const error = await res.json();
-        throw new Error(error.error || "Ошибка при добавлении расходов");
-      }
-
-      const json = await res.json();
-      console.log("Расходы добавлена:", json.transaction);
-
-      window.location.reload();
-
-      return json.transaction;
-    } catch (err) {
-      console.error(err);
-      alert("Ошибка при добавлении расходов");
-    }
-  };
-
-  const handleAddExpense = () => {
-    addExpenseTransaction({
-      title: title,
-      category: category,
-      amount: amount,
-      type: operationType,
-      icon: selectedIcon,
-      description: description,
-    });
-
-    closeModal();
-  };
-
-  const handleAddIncome = async () => {
-    if (!user?.id) {
-      alert("Пользователь не авторизован");
-      return;
-    }
-
-    await addExpenseTransaction({
+  const handleAddTransaction = () => {
+    addTransactionAction({
       title: title,
       category: category,
       amount: amount,
@@ -157,7 +109,7 @@ export const AddOperationModal = () => {
               </Button>
               <Button
                 className={`${s.addOperationModal__submitButton} ${!title || !amount || !category ? s.disabled : operationType === "income" ? s.income : s.expense}`}
-                onClick={operationType === "income" ? handleAddIncome : handleAddExpense}
+                onClick={handleAddTransaction}
                 disabled={!title || !amount}
               >
                 {operationType === "income" ? "Добавить доход" : "Добавить расход"}
