@@ -7,7 +7,11 @@ import { useModalStore } from "../../../../../stores/modalStore";
 import s from "./RecentTransactionsList/RecentTransactionsList.module.scss";
 
 export const HeaderTransactions = () => {
-  const { openModal } = useModalStore();
+  const { openAddModal, setType } = useModalStore();
+  const handleClick = () => {
+    openAddModal();
+    setType("add");
+  };
 
   return (
     <div className={s.recentTransactions__header}>
@@ -15,7 +19,7 @@ export const HeaderTransactions = () => {
         <h2 className={s.recentTransactions__title}>Последние операции</h2>
         <p className={s.recentTransactions__subtitle}>Ваши недавние доходы и расходы</p>
       </div>
-      <Button className={s.recentTransactions__primary} icon="/plus.svg" onClick={openModal}>
+      <Button className={s.recentTransactions__primary} icon="/plus.svg" onClick={handleClick}>
         Добавить операцию
       </Button>
     </div>

@@ -1,4 +1,4 @@
-.addOperationModal {
+.operationModal {
   &__container {
     position: fixed;
     inset: 0;
@@ -131,5 +131,17 @@
         transform: scale(1.05);
       }
     }
+  }
+
+  &__expense,
+  &__income {
+    display: flex;
+    justify-content: center;
+    border-radius: 16px;
+    gap: 8px;
+    margin: 16px 0;
+    padding: 12px 24px;
+    color: #fff;
+    font-weight: 600;
   }
 }

@@ -5,6 +5,7 @@ import { Trash, Pencil } from "lucide-react";
 import { deleteTransactionAction } from "@/app/actions/transactions";
 
 import s from "./TransactionItem.module.scss";
+import { useModalStore } from "../../../../../stores/modalStore";
 
 type TTransactionItemProps = {
   id: number;
@@ -16,10 +17,12 @@ type TTransactionItemProps = {
   date: Date;
   amount: number;
   setSelectedTransaction: (transaction: any) => void;
-  openModal: () => void;
+  openEditModal: () => void;
 };
 
-export const TransactionItem = ({ id, type, icon, iconName, title, category, date, amount, setSelectedTransaction, openModal }: TTransactionItemProps) => {
+export const TransactionItem = ({ id, type, icon, iconName, title, category, date, amount, setSelectedTransaction, openEditModal }: TTransactionItemProps) => {
+  const { setType } = useModalStore();
+
   const handleDelete = async () => {
     try {
       await deleteTransactionAction(id);
@@ -51,6 +54,12 @@ export const TransactionItem = ({ id, type, icon, iconName, title, category, dat
     return type === "income" ? `+${formatted} ₽` : `-${formatted} ₽`;
   };
 
+  const handleClick = () => {
+    setSelectedTransaction({ id, type, icon: iconName, title, category, date, amount });
+    openEditModal();
+    setType("edit");
+  };
+
   return (
     <div key={id} className={`${s.transactionItem} ${type === "expense" ? s["transactionItem--expense"] : s["transactionItem--income"]}`}>
       <div className={s.transactionItem__transactionContent}>
@@ -70,7 +79,8 @@ export const TransactionItem = ({ id, type, icon, iconName, title, category, dat
         <Pencil
           onClick={() => {
             setSelectedTransaction({ id, type, icon: iconName, title, category, date, amount });
-            openModal();
+            openEditModal();
+            setType("edit");
           }}
           className={s.transactionItem__editIcon}
         />

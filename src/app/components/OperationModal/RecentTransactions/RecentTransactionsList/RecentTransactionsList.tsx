@@ -3,14 +3,13 @@ import { HeaderTransactions } from "../HeaderTransactions";
 
 import { TransactionItem } from "@/app/ui/components/TransactionItem";
 
-import { useEditModalStore } from "../../../../../../stores/modalStore";
-
 import { categoryIcons } from "@/app/mockData";
 
+import { useModalStore } from "../../../../../../stores/modalStore";
 import s from "./RecentTransactionsList.module.scss";
 
 export const RecentTransactionsList = ({ transactions }: { transactions: any[] }) => {
-  const { setSelectedTransaction, openModal } = useEditModalStore();
+  const { setSelectedTransaction, openAddModal, openEditModal } = useModalStore();
 
   return (
     <div className={s.recentTransactions}>
@@ -32,7 +31,7 @@ export const RecentTransactionsList = ({ transactions }: { transactions: any[] }
                 date={transaction.date}
                 amount={transaction.amount}
                 setSelectedTransaction={setSelectedTransaction}
-                openModal={openModal}
+                openEditModal={openEditModal}
               />
             );
           })

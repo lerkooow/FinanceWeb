@@ -1,27 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-interface ModalState {
-  isAddOperationOpen: boolean;
-  openModal: () => void;
-  closeModal: () => void;
-  toggleModal: () => void;
-}
-
-export const useModalStore = create<ModalState>()(
-  persist(
-    (set) => ({
-      isAddOperationOpen: false,
-      openModal: () => set({ isAddOperationOpen: true }),
-      closeModal: () => set({ isAddOperationOpen: false }),
-      toggleModal: () => set((state) => ({ isAddOperationOpen: !state.isAddOperationOpen })),
-    }),
-    {
-      name: "modal-storage",
-    }
-  )
-);
-
 type TTransaction = {
   id: number;
   type: "expense" | "income";
@@ -32,20 +11,43 @@ type TTransaction = {
   amount: number;
 };
 
-interface EditModalState {
+interface ModalState {
+  isAddOperationOpen: boolean;
+  openAddModal: () => void;
+  closeAddModal: () => void;
+  toggleAddModal: () => void;
+
   isEditOperationOpen: boolean;
-  openModal: () => void;
-  closeModal: () => void;
-  toggleModal: () => void;
+  openEditModal: () => void;
+  closeEditModal: () => void;
+  toggleEditModal: () => void;
+
+  type: "edit" | "add";
+  setType: (type: "edit" | "add") => void;
   selectedTransaction: TTransaction | null;
   setSelectedTransaction: (transaction: TTransaction) => void;
 }
 
-export const useEditModalStore = create<EditModalState>()((set) => ({
-  isEditOperationOpen: false,
-  openModal: () => set({ isEditOperationOpen: true }),
-  closeModal: () => set({ isEditOperationOpen: false }),
-  toggleModal: () => set((state) => ({ isEditOperationOpen: !state.isEditOperationOpen })),
-  selectedTransaction: null,
-  setSelectedTransaction: (transaction: TTransaction) => set({ selectedTransaction: transaction }),
-}));
+export const useModalStore = create<ModalState>()(
+  persist(
+    (set) => ({
+      isAddOperationOpen: false,
+      openAddModal: () => set({ isAddOperationOpen: true }),
+      closeAddModal: () => set({ isAddOperationOpen: false }),
+      toggleAddModal: () => set((state) => ({ isAddOperationOpen: !state.isAddOperationOpen })),
+
+      isEditOperationOpen: false,
+      openEditModal: () => set({ isEditOperationOpen: true }),
+      closeEditModal: () => set({ isEditOperationOpen: false }),
+      toggleEditModal: () => set((state) => ({ isEditOperationOpen: !state.isEditOperationOpen })),
+
+      type: "add",
+      setType: (type: "edit" | "add") => set({ type }),
+      selectedTransaction: null,
+      setSelectedTransaction: (transaction: TTransaction) => set({ selectedTransaction: transaction }),
+    }),
+    {
+      name: "modal-storage",
+    }
+  )
+);
