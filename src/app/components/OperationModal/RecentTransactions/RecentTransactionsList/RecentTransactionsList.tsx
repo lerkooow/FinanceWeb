@@ -1,18 +1,16 @@
 "use client";
-
-import { useState } from "react";
-
 import { HeaderTransactions } from "../HeaderTransactions";
+
 import { TransactionItem } from "@/app/ui/components/TransactionItem";
+
+import { useEditModalStore } from "../../../../../../stores/modalStore";
 
 import { categoryIcons } from "@/app/mockData";
 
 import s from "./RecentTransactionsList.module.scss";
-import { useEditModalStore } from "../../../../../stores/modalStore";
 
 export const RecentTransactionsList = ({ transactions }: { transactions: any[] }) => {
-  const { selectedTransaction, setSelectedTransaction, openModal } = useEditModalStore();
-  console.log("🚀 ~ RecentTransactionsList ~ selectedTransaction:", selectedTransaction);
+  const { setSelectedTransaction, openModal } = useEditModalStore();
 
   return (
     <div className={s.recentTransactions}>

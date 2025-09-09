@@ -23,9 +23,7 @@ export default async function Home() {
       <SignedOut>
         <div className={s.page__auth}>
           <SignUpButton mode="modal" forceRedirectUrl="/account">
-            <Button iconVisible={false} className="button--primary">
-              ЗАРЕГИСТРИРОВАТЬСЯ
-            </Button>
+            <Button className={s.page__primary}>ЗАРЕГИСТРИРОВАТЬСЯ</Button>
           </SignUpButton>
 
           <SignInButton mode="modal" forceRedirectUrl="/account">

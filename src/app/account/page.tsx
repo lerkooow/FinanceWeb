@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { BudgetOverview } from "../components/BudgetOverview";
 import { AddOperationModal } from "../components/AddOperationModal";
 import { EditOperationModal } from "../components/EditOperationModal";
-import { RecentTransactionsServer } from "../components/RecentTransactions/RecentTransactionsServer/RecentTransactionsServer";
+import { RecentTransactionsServer } from "../components/OperationModal/RecentTransactions/RecentTransactionsServer";
 
 import s from "./page.module.scss";
 

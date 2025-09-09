@@ -12,10 +12,10 @@ import { Button } from "@/app/ui/components/Button";
 import { useModalStore } from "../../../../stores/modalStore";
 import { expenseIcons, incomeIcons } from "@/app/mockData";
 
-import s from "./AddOperationModal.module.scss";
+import s from "./OperationModal.module.scss";
 import { addTransactionAction } from "@/app/actions/transactions";
 
-export const AddOperationModal = () => {
+export const OperationModal = () => {
   const { isAddOperationOpen, closeModal } = useModalStore();
 
   const [operationType, setOperationType] = useState<"expense" | "income">("expense");
@@ -49,19 +49,19 @@ export const AddOperationModal = () => {
   return (
     <>
       {isAddOperationOpen && (
-        <div className={s.addOperationModal__container}>
-          <div className={s.addOperationModal__content}>
+        <div className={s.operationModal__container}>
+          <div className={s.operationModal__content}>
             <div>
-              <div className={s.addOperationModal__header}>
+              <div className={s.operationModal__header}>
                 <div>
                   <h2>Добавить операцию</h2>
                   <p>Добавление ваших доходов и расходов</p>
                 </div>
-                <Image src="cross.svg" alt="Exit" width={24} height={24} onClick={closeModal} className={s.addOperationModal__closeButton} />
+                <Image src="cross.svg" alt="Exit" width={24} height={24} onClick={closeModal} className={s.operationModal__closeButton} />
               </div>
 
               <form>
-                <div className={s.addOperationModal__operationToggle}>
+                <div className={s.operationModal__operationToggle}>
                   {["expense", "income"].map((type) => (
                     <OperationButton
                       key={type}
@@ -75,7 +75,7 @@ export const AddOperationModal = () => {
                   ))}
                 </div>
                 <p>
-                  Выберите категорию <span className={s.addOperationModal__inputRequired}>*</span>
+                  Выберите категорию <span className={s.operationModal__inputRequired}>*</span>
                 </p>
                 <CategoryItem
                   operationType={operationType}
@@ -85,13 +85,13 @@ export const AddOperationModal = () => {
                   setSelectedIcon={setSelectedIcon}
                   setCategory={setCategory}
                 />
-                <div className={s.addOperationModal__form}>
-                  <FormField label="Заголовок" type="text" required placeholder="Например: Продукты в магазине" className={s.addOperationModal__inputField} value={title} setValue={setTitle} />
+                <div className={s.operationModal__form}>
+                  <FormField label="Заголовок" type="text" required placeholder="Например: Продукты в магазине" className={s.operationModal__inputField} value={title} setValue={setTitle} />
 
                   <FormField
                     label="Описание"
                     value={description}
-                    className={s.addOperationModal__inputField}
+                    className={s.operationModal__inputField}
                     setValue={setDescription}
                     placeholder="Дополнительная информация об операции..."
                     textarea
@@ -110,18 +110,18 @@ export const AddOperationModal = () => {
                       if (!isNaN(num)) setAmount(num);
                     }}
                     placeholder="0.00"
-                    className={s.addOperationModal__inputField}
+                    className={s.operationModal__inputField}
                   />
                 </div>
               </form>
             </div>
 
-            <div className={s.addOperationModal__modalFooter}>
-              <Button className={s.addOperationModal__cancelButton} onClick={closeModal}>
+            <div className={s.operationModal__modalFooter}>
+              <Button className={s.operationModal__cancelButton} onClick={closeModal}>
                 Отмена
               </Button>
               <Button
-                className={`${s.addOperationModal__submitButton} ${!title || !amount || !category ? s.disabled : operationType === "income" ? s.income : s.expense}`}
+                className={`${s.operationModal__submitButton} ${!title || !amount || !category ? s.disabled : operationType === "income" ? s.income : s.expense}`}
                 onClick={handleAddTransaction}
                 disabled={!title || !amount}
               >

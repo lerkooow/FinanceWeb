@@ -1,8 +1,8 @@
 import { auth } from "@clerk/nextjs/server";
 import { eq, desc } from "drizzle-orm";
-import { db } from "../../../../../db";
-import { TransactionTable, UserTable } from "../../../../../db/schema";
 import { RecentTransactionsList } from "../RecentTransactionsList";
+import { db } from "../../../../../../db";
+import { TransactionTable, UserTable } from "../../../../../../db/schema";
 
 export const RecentTransactionsServer = async () => {
   const { userId } = await auth();

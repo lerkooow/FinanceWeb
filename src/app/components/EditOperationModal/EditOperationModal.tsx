@@ -4,15 +4,13 @@ import { useEffect, useState } from "react";
 
 import Image from "next/image";
 
-import { OperationButton } from "./OperationButton";
 import { FormField } from "../FormField";
-import { CategoryItem } from "./CategoryItem";
 import { Button } from "@/app/ui/components/Button";
 
 import { useEditModalStore } from "../../../../stores/modalStore";
-import { expenseIcons, incomeIcons } from "@/app/mockData";
 
 import { updateTransactionAction } from "@/app/actions/transactions";
+
 import s from "./EditOperationModal.module.scss";
 
 export const EditOperationModal = () => {
@@ -87,7 +85,20 @@ export const EditOperationModal = () => {
                     rows={2}
                   />
 
-                  <FormField label="Сумма" required type="text" value={amount} setValue={(val: string) => setAmount(Number(val))} placeholder="0.00" className={s.editOperationModal__inputField} />
+                  <FormField
+                    label="Сумма"
+                    required
+                    type="text"
+                    value={amount}
+                    setValue={(val: string) => {
+                      if ((val.replace(/^0+/, "") || "0") === "") return;
+
+                      const num = Number(val.replace(/^0+/, "") || "0");
+                      if (!isNaN(num)) setAmount(num);
+                    }}
+                    placeholder="0.00"
+                    className={s.editOperationModal__inputField}
+                  />
                 </div>
               </form>
             </div>
