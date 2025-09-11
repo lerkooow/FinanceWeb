@@ -19,8 +19,8 @@ type TOperationModalProps = {
 
 export const OperationModal = ({ type }: TOperationModalProps) => {
   const {
-    isAddOperationOpen,
-    isEditOperationOpen,
+    open,
+    disabled,
     operationType,
     selectedIcon,
     title,
@@ -38,9 +38,7 @@ export const OperationModal = ({ type }: TOperationModalProps) => {
     handleEditTransaction,
     closeAddModal,
     closeEditModal,
-  } = useOperationModal();
-
-  const open = type === "add" ? isAddOperationOpen : isEditOperationOpen;
+  } = useOperationModal({ type });
 
   return (
     <>
@@ -127,7 +125,7 @@ export const OperationModal = ({ type }: TOperationModalProps) => {
               <Button
                 className={`${s.operationModal__submitButton} ${!title || !amount || !category ? s.disabled : operationType === "income" ? s.income : s.expense}`}
                 onClick={type === "add" ? handleAddTransaction : handleEditTransaction}
-                disabled={!title || !amount}
+                disabled={disabled}
               >
                 {operationType === "income" ? "Добавить доход" : "Добавить расход"}
               </Button>

@@ -18,7 +18,6 @@ export default async function page() {
     <div className={s.page}>
       <BudgetOverview />
       <RecentTransactionsServer />
-
       <OperationModalWrapper />
     </div>
   );

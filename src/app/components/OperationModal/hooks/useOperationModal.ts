@@ -6,7 +6,11 @@ import { useModalStore } from "../../../../../stores/modalStore";
 
 import { addTransactionAction, updateTransactionAction } from "@/app/actions/transactions";
 
-export const useOperationModal = () => {
+type TUseOperationModalProps = {
+  type: "add" | "edit";
+};
+
+export const useOperationModal = ({ type }: TUseOperationModalProps) => {
   const { isAddOperationOpen, isEditOperationOpen, selectedTransaction, closeAddModal, closeEditModal } = useModalStore();
 
   const [operationType, setOperationType] = useState<"expense" | "income">("expense");
@@ -15,6 +19,9 @@ export const useOperationModal = () => {
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState(0);
   const [category, setCategory] = useState("");
+
+  const open = type === "add" ? isAddOperationOpen : isEditOperationOpen;
+  const disabled = type === "add" ? !title || !amount || !category : !title || !amount;
 
   const resetForm = () => {
     setOperationType("expense");
@@ -35,8 +42,8 @@ export const useOperationModal = () => {
       description: description,
     });
 
-    closeAddModal();
     resetForm();
+    closeAddModal();
   };
 
   useEffect(() => {
@@ -48,13 +55,13 @@ export const useOperationModal = () => {
   }, [isAddOperationOpen]);
 
   useEffect(() => {
-    if (selectedTransaction) {
+    if (isEditOperationOpen && selectedTransaction) {
       setOperationType(selectedTransaction.type);
       setTitle(selectedTransaction.title);
       setCategory(selectedTransaction.category);
       setAmount(selectedTransaction.amount);
     }
-  }, [selectedTransaction]);
+  }, [isEditOperationOpen, selectedTransaction]);
 
   const handleEditTransaction = async () => {
     if (!selectedTransaction) return;
@@ -67,16 +74,17 @@ export const useOperationModal = () => {
       description: description,
     });
 
+    resetForm();
     closeEditModal();
   };
 
   return {
+    open,
+    disabled,
     title,
     amount,
     category,
     description,
-    isAddOperationOpen,
-    isEditOperationOpen,
     operationType,
     selectedIcon,
     selectedTransaction,
