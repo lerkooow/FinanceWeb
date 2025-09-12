@@ -1,8 +1,8 @@
 import { auth } from "@clerk/nextjs/server";
 import { eq, desc } from "drizzle-orm";
-import { RecentTransactionsList } from "../RecentTransactionsList";
-import { db } from "../../../../../../db";
-import { TransactionTable, UserTable } from "../../../../../../db/schema";
+import { db } from "../../../../../db";
+import { TransactionTable, UserTable } from "../../../../../db/schema";
+import { RecentTransactions } from "../RecentTransactions";
 
 export const RecentTransactionsServer = async () => {
   const { userId } = await auth();
@@ -14,5 +14,5 @@ export const RecentTransactionsServer = async () => {
 
   const dbTransaction = user ? await db.select().from(TransactionTable).where(eq(TransactionTable.userId, user.id)).orderBy(desc(TransactionTable.id)) : [];
 
-  return <RecentTransactionsList transactions={dbTransaction} />;
+  return <RecentTransactions transactions={dbTransaction} />;
 };

@@ -12,6 +12,7 @@ type TCategoryItemProps = {
 };
 
 export const CategoryItem = ({ operationType, selectedIcon, incomeIcons, expenseIcons, setSelectedIcon, setCategory }: TCategoryItemProps) => {
+  console.log("🚀 ~ CategoryItem ~ selectedIcon:", selectedIcon);
   const currentIcons = operationType === "income" ? incomeIcons : expenseIcons;
 
   return (

@@ -1,1 +1,0 @@
-export { RecentTransactionsList } from "./RecentTransactionsList";

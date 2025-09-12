@@ -1,0 +1,50 @@
+.blockHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  position: relative;
+  gap: 20px;
+  flex-wrap: wrap;
+
+  &__title {
+    font-size: clamp(28px, 3.5vw, 36px);
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 8px 0;
+    background: linear-gradient(135deg, #1a1a1a 0%, #414153 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  &__subtitle {
+    font-size: 16px;
+    color: #6b7280;
+    margin: 0;
+    font-weight: 400;
+  }
+
+  &__primary {
+    background: linear-gradient(135deg, #2c48ff 0%, #4158d0 100%);
+    box-shadow: 0 6px 12px rgba(44, 72, 255, 0.4);
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: linear-gradient(135deg, #2238c8 0%, #3646b3 100%);
+      box-shadow: 0 8px 16px rgba(34, 56, 200, 0.5);
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      background: linear-gradient(135deg, #1a2b9d 0%, #2a37a3 100%);
+      box-shadow: 0 4px 8px rgba(26, 43, 157, 0.5);
+      transform: translateY(1px);
+    }
+  }
+
+  @media (max-width: 480px) {
+    &__title {
+      font-size: 24px;
+    }
+  }
+}

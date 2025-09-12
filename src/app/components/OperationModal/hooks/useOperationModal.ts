@@ -14,7 +14,7 @@ export const useOperationModal = ({ type }: TUseOperationModalProps) => {
   const { isAddOperationOpen, isEditOperationOpen, selectedTransaction, closeAddModal, closeEditModal } = useModalStore();
 
   const [operationType, setOperationType] = useState<"expense" | "income">("expense");
-  const [selectedIcon, setSelectedIcon] = useState("DollarSign");
+  const [selectedIcon, setSelectedIcon] = useState(type === "add" ? "GROCERY" : "DOLLAR");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState(0);
@@ -25,7 +25,7 @@ export const useOperationModal = ({ type }: TUseOperationModalProps) => {
 
   const resetForm = () => {
     setOperationType("expense");
-    setSelectedIcon("DollarSign");
+    setSelectedIcon("");
     setTitle("");
     setDescription("");
     setAmount(0);

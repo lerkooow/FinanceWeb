@@ -3,7 +3,7 @@
 import Image from "next/image";
 
 import { OperationButton } from "./OperationButton";
-import { FormField } from "../FormField";
+import { FormField } from "../../ui/components/FormField";
 import { CategoryItem } from "./CategoryItem";
 import { Button } from "@/app/ui/components/Button";
 
@@ -39,6 +39,8 @@ export const OperationModal = ({ type }: TOperationModalProps) => {
     closeAddModal,
     closeEditModal,
   } = useOperationModal({ type });
+  console.log("🚀 ~ OperationModal ~ disabled:", disabled);
+  console.log("🚀 ~ OperationModal ~ category:", category);
 
   return (
     <>
@@ -64,7 +66,7 @@ export const OperationModal = ({ type }: TOperationModalProps) => {
                         isActive={operationType === type}
                         onClick={() => {
                           setOperationType(type as "expense" | "income");
-                          setSelectedIcon(type === "expense" ? "ShoppingCart" : "DollarSign");
+                          setSelectedIcon(type === "expense" ? "GROCERY" : "DOLLAR");
                         }}
                       />
                     ))}

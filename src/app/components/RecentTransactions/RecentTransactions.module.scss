@@ -1,4 +1,4 @@
-.budgetOverview {
+.recentTransactions {
   background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
   border-radius: 24px;
   padding: 40px;
@@ -16,7 +16,7 @@
 
   @media (max-width: 768px) {
     padding: 24px;
-    gap: 32px;
+    gap: 24px;
   }
 
   &::before {
@@ -29,15 +29,9 @@
     background: linear-gradient(90deg, #414153 0%, #2c48ff 100%);
   }
 
-  &__cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 24px;
-  }
-
-  @media (max-width: 1024px) {
-    &__cards {
-      grid-template-columns: 1fr;
-    }
+  &__transactionsList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
   }
 }

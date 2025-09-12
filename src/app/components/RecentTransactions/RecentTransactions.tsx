@@ -1,20 +1,24 @@
 "use client";
-import { HeaderTransactions } from "../HeaderTransactions";
 
 import { TransactionItem } from "@/app/ui/components/TransactionItem";
 
 import { categoryIcons } from "@/app/mockData";
 
-import { useModalStore } from "../../../../../../stores/modalStore";
-import s from "./RecentTransactionsList.module.scss";
+import { useModalStore } from "../../../../stores/modalStore";
+import { EmptyTransactions } from "./EmptyTransactions";
+import { BlockHeader } from "@/app/ui/components/BlockHeader/BlockHeader";
+import s from "./RecentTransactions.module.scss";
 
-export const RecentTransactionsList = ({ transactions }: { transactions: any[] }) => {
-  const { setSelectedTransaction, openAddModal, openEditModal } = useModalStore();
+export const RecentTransactions = ({ transactions }: { transactions: any[] }) => {
+  const { setSelectedTransaction, openEditModal, openAddModal, setType } = useModalStore();
+  const handleClick = () => {
+    openAddModal();
+    setType("add");
+  };
 
   return (
     <div className={s.recentTransactions}>
-      <HeaderTransactions />
-
+      <BlockHeader title="Последние операции" subtitle="Ваши недавние доходы и расходы" buttonText="Добавить операцию" icon="/plus.svg" onButtonClick={handleClick} />
       <div className={s.recentTransactions__transactionsList}>
         {transactions.length > 0 ? (
           transactions.map((transaction) => {
@@ -36,11 +40,7 @@ export const RecentTransactionsList = ({ transactions }: { transactions: any[] }
             );
           })
         ) : (
-          <div className={s.recentTransactions__emptyState}>
-            <div className={s.recentTransactions__emptyIcon}>📊</div>
-            <div className={s.recentTransactions__emptyText}>Нет операций</div>
-            <div className={s.recentTransactions__emptySubtext}>Добавьте первую операцию, чтобы начать отслеживание расходов</div>
-          </div>
+          <EmptyTransactions />
         )}
       </div>
     </div>
