@@ -22,13 +22,19 @@ export const useBudgetOverview = async () => {
   const available = income - expenses;
   const progress = income === 0 ? 0 : Math.min((expenses / income) * 100, 100);
 
-  const date = new Date();
+  const now = new Date();
+  const lastDayOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
 
-  const formatted = date.toLocaleDateString("ru-RU", {
+  const formatted = now.toLocaleDateString("ru-RU", {
     day: "2-digit",
     month: "long",
     year: "numeric",
   });
 
-  return { formatted, income, available, progress, expenses };
+  const remainingDays = lastDayOfMonth.getDate() - now.getDate();
+
+  const noticeError = income < expenses;
+  const dailyBudget = Math.floor(available / remainingDays);
+
+  return { formatted, noticeError, dailyBudget, income, available, progress, expenses };
 };

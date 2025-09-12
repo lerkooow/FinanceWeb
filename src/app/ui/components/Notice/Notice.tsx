@@ -7,7 +7,7 @@ type TNoticeProps = {
   icon?: string;
 };
 
-export const Notice = ({ description, type, icon }: TNoticeProps) => {
+export const Notice = ({ description, type = "info", icon }: TNoticeProps) => {
   return (
     <div className={`${s.notice} ${s[`notice--${type}`]}`}>
       {icon && <Image src={icon} alt={type ?? ""} width={24} height={24} />}
