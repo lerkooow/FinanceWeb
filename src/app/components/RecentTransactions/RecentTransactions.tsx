@@ -1,5 +1,4 @@
 "use client";
-
 import { TransactionItem } from "@/app/ui/components/TransactionItem";
 
 import { categoryIcons } from "@/app/mockData";
@@ -7,9 +6,24 @@ import { categoryIcons } from "@/app/mockData";
 import { useModalStore } from "../../../../stores/modalStore";
 import { EmptyTransactions } from "./EmptyTransactions";
 import { BlockHeader } from "@/app/ui/components/BlockHeader/BlockHeader";
+
 import s from "./RecentTransactions.module.scss";
 
-export const RecentTransactions = ({ transactions }: { transactions: any[] }) => {
+type TRecentTransactionsProps = {
+  transactions: {
+    id: number;
+    title: string;
+    category: string;
+    amount: number;
+    date: Date;
+    type: string;
+    icon: string | null;
+    userId: number;
+    description: string | null;
+  }[];
+};
+
+export const RecentTransactions = ({ transactions }: TRecentTransactionsProps) => {
   const { setSelectedTransaction, openEditModal, openAddModal, setType } = useModalStore();
   const handleClick = () => {
     openAddModal();

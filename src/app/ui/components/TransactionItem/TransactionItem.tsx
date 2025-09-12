@@ -4,14 +4,15 @@ import { Trash, Pencil } from "lucide-react";
 
 import { deleteTransactionAction } from "@/app/actions/transactions";
 
-import s from "./TransactionItem.module.scss";
 import { useModalStore } from "../../../../../stores/modalStore";
+
+import s from "./TransactionItem.module.scss";
 
 type TTransactionItemProps = {
   id: number;
   type: "expense" | "income";
   icon: React.ReactNode;
-  iconName: string;
+  iconName: string | null;
   title: string;
   category: string;
   date: Date;
@@ -54,7 +55,7 @@ export const TransactionItem = ({ id, type, icon, iconName, title, category, dat
     return type === "income" ? `+${formatted} ₽` : `-${formatted} ₽`;
   };
 
-  const handleClick = () => {
+  const handleEditClick = () => {
     setSelectedTransaction({ id, type, icon: iconName, title, category, date, amount });
     openEditModal();
     setType("edit");
@@ -66,7 +67,7 @@ export const TransactionItem = ({ id, type, icon, iconName, title, category, dat
         <div className={s.transactionItem__transactionInfo}>
           <div className={s.transactionItem__transactionIcon}>{icon}</div>
           <div>
-            <h4 className={s.transactionItem__transactionTitle}>{title}</h4>
+            <h4 className={s.transactionItem__transactionTitle}>{title ? title : category}</h4>
             <p className={s.transactionItem__transactionCategory}>{category}</p>
           </div>
         </div>
@@ -76,14 +77,7 @@ export const TransactionItem = ({ id, type, icon, iconName, title, category, dat
         {formatAmount(amount)}
       </div>
       <div className={s.transactionItem__transactionAction}>
-        <Pencil
-          onClick={() => {
-            setSelectedTransaction({ id, type, icon: iconName, title, category, date, amount });
-            openEditModal();
-            setType("edit");
-          }}
-          className={s.transactionItem__editIcon}
-        />
+        <Pencil onClick={handleEditClick} className={s.transactionItem__editIcon} />
         <Trash className={s.transactionItem__deleteIcon} onClick={handleDelete} />
       </div>
     </div>
