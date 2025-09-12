@@ -144,4 +144,12 @@
     color: #fff;
     font-weight: 600;
   }
+
+  &__expense {
+    background: linear-gradient(to right, #ef4444, #dc2626);
+  }
+
+  &__income {
+    background: linear-gradient(to right, #16a34a, #15803d);
+  }
 }

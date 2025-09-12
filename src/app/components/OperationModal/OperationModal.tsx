@@ -23,14 +23,12 @@ export const OperationModal = ({ type }: TOperationModalProps) => {
     disabled,
     operationType,
     selectedIcon,
-    title,
     description,
     amount,
     category,
     selectedTransaction,
     setOperationType,
     setSelectedIcon,
-    setTitle,
     setDescription,
     setAmount,
     setCategory,
@@ -39,8 +37,6 @@ export const OperationModal = ({ type }: TOperationModalProps) => {
     closeAddModal,
     closeEditModal,
   } = useOperationModal({ type });
-  console.log("🚀 ~ OperationModal ~ disabled:", disabled);
-  console.log("🚀 ~ OperationModal ~ category:", category);
 
   return (
     <>
@@ -66,7 +62,8 @@ export const OperationModal = ({ type }: TOperationModalProps) => {
                         isActive={operationType === type}
                         onClick={() => {
                           setOperationType(type as "expense" | "income");
-                          setSelectedIcon(type === "expense" ? "GROCERY" : "DOLLAR");
+                          setCategory("");
+                          setSelectedIcon("");
                         }}
                       />
                     ))}
@@ -90,8 +87,6 @@ export const OperationModal = ({ type }: TOperationModalProps) => {
                   </>
                 )}
                 <div className={s.operationModal__form}>
-                  <FormField label="Заголовок" type="text" required placeholder="Например: Продукты в магазине" className={s.operationModal__inputField} value={title} setValue={setTitle} />
-
                   <FormField
                     label="Описание"
                     value={description}
@@ -125,11 +120,11 @@ export const OperationModal = ({ type }: TOperationModalProps) => {
                 Отмена
               </Button>
               <Button
-                className={`${s.operationModal__submitButton} ${!title || !amount || !category ? s.disabled : operationType === "income" ? s.income : s.expense}`}
+                className={`${s.operationModal__submitButton} ${!amount || !category ? s.disabled : operationType === "income" ? s.income : s.expense}`}
                 onClick={type === "add" ? handleAddTransaction : handleEditTransaction}
                 disabled={disabled}
               >
-                {operationType === "income" ? "Добавить доход" : "Добавить расход"}
+                {type === "add" ? (operationType === "income" ? "Добавить доход" : "Добавить расход") : "Сохранить"}
               </Button>
             </div>
           </div>
