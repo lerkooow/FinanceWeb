@@ -12,12 +12,8 @@ export const Header = () => {
   return (
     <div className={s.header}>
       <div className={s.header__logo}>
-        <div className={s.header__logoIcon}>
-          <Image src="/wallet.svg" alt="Wallet Icon" width={24} height={24} />
-        </div>
         <div className={s.header__logoText}>
           <h2>FinanceTracker</h2>
-          <p>Контроль расходов</p>
         </div>
       </div>
       <SignedIn>

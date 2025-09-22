@@ -1,8 +1,19 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@font-face {
+  font-family: "SF Pro Regular";
+  src: url("/fonts/SF-Pro/SF-Pro-Display-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: "Montserrat", sans-serif;
+  font-family: "SF Pro Regular", sans-serif;
+}
+
+body {
+  background: linear-gradient(180deg, #7cc9f2 0%, #f4a7c3 50%, rgba(253, 211, 181, 1) 75%, rgba(253, 211, 181, 0) 100%);
+  background-repeat: no-repeat;
+  background-size: 100% 10%;
 }

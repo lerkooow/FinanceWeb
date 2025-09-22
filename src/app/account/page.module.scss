@@ -3,6 +3,6 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin: 48px 20px;
+  margin: clamp(16px, 5vw, 48px) 20px;
   gap: 48px;
 }
