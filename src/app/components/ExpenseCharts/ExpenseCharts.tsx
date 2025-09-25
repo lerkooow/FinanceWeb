@@ -1,7 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend } from "recharts";
+import { useMediaQuery } from "usehooks-ts";
+
+import { BlockHeader } from "@/app/ui/components/BlockHeader/BlockHeader";
 
 import s from "./ExpenseCharts.module.scss";
 
@@ -21,7 +23,7 @@ type ExpenseChartsProps = {
 };
 
 export const ExpenseCharts = ({ transactions }: ExpenseChartsProps) => {
-  const [isMobile, setIsMobile] = useState(false);
+  const isMobile = useMediaQuery("(max-width: 768px)");
 
   const prepareChartData = () => {
     const expenses = transactions.filter((t) => t.type === "expense");
@@ -36,19 +38,10 @@ export const ExpenseCharts = ({ transactions }: ExpenseChartsProps) => {
 
   const data = prepareChartData();
 
-  useEffect(() => {
-    const checkScreen = () => setIsMobile(window.innerWidth < 425);
-    checkScreen();
-    window.addEventListener("resize", checkScreen);
-    return () => window.removeEventListener("resize", checkScreen);
-  }, []);
-
   return (
     <div className={s.expenseCharts}>
-      <div>
-        <h2 className={s.expenseCharts__budgetTitle}>Обзор бюджета по категориям</h2>
-        <p className={s.expenseCharts__budgetSubtitle}>Мониторинг финансовых показателей по категориям</p>
-      </div>
+      <BlockHeader title="Обзор бюджета по категориям" subtitle="Мониторинг финансовых показателей по категориям" />
+
       <div className={s.expenseCharts__pie}>
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>

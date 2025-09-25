@@ -11,19 +11,18 @@ export const BudgetOverview = async () => {
 
   return (
     <div className={s.budgetOverview}>
-      <BlockHeader title="Обзор бюджета" subtitle={`Финансовые показатели на ${formatted}`} />
+      <BlockHeader title="Обзор бюджета" subtitle={`Финансовые показатели на ${formatted}`} arrow />
 
       <div className={s.budgetOverview__cards}>
         {cards.map((card) => (
           <BudgetCard key={card.title} {...card} />
         ))}
       </div>
-
-      <div className={s.budgetOverview__dailyBudget}>Ваш бюджет на день: {dailyBudget} ₽</div>
-
       {renderNotice()}
-
-      <ProgressSection progress={progress} title="Использование бюджета" />
+      <div className={s.budgetOverview__bottom}>
+        <div className={s.budgetOverview__dailyBudget}>Ваш бюджет на день: {dailyBudget} ₽</div>
+        <ProgressSection progress={progress} title="Использование бюджета" />
+      </div>
     </div>
   );
 };

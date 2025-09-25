@@ -22,7 +22,7 @@
     .progressPercentage {
       font-size: 24px;
       font-weight: 700;
-      background: linear-gradient(135deg, #414153 0%, #2c48ff 100%);
+      background: #ff619b;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -41,7 +41,7 @@
 
     .progressFill {
       height: 100%;
-      background: linear-gradient(90deg, #414153 0%, #2c48ff 100%);
+      background: #f4a7c3;
       border-radius: 12px;
       transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;

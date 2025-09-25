@@ -6,7 +6,6 @@ import { OperationModalWrapper } from "../components/OperationModal/OperationMod
 import { RecentTransactionsServer } from "../components/RecentTransactions/RecentTransactionsServer";
 
 import s from "./page.module.scss";
-import { ExpenseChartsServer } from "../components/ExpenseCharts";
 
 export default async function page() {
   const { userId } = await auth();
@@ -20,7 +19,6 @@ export default async function page() {
       <BudgetOverview />
       <RecentTransactionsServer />
       <OperationModalWrapper />
-      <ExpenseChartsServer />
     </div>
   );
 }

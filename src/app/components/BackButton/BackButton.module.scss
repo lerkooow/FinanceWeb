@@ -1,0 +1,11 @@
+.backButton {
+  display: flex;
+  color: #858585;
+  align-items: center;
+  gap: 18x;
+  cursor: pointer;
+
+  &__arrow {
+    transform: rotate(180deg);
+  }
+}

@@ -13,6 +13,7 @@
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
+  min-height: 100px;
 
   &::before {
     content: "";
@@ -69,6 +70,7 @@
     display: flex;
     gap: 16px;
     align-items: center;
+    min-width: 220px;
   }
 
   &__transactionTitle {

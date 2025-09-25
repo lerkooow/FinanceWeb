@@ -11,7 +11,7 @@ export const ProgressSection = ({ progress, title, percentage = true }: TProgres
     <div className={s.progressSection}>
       <div className={s.progressInfo}>
         <span className={s.progressLabel}>{title}</span>
-        {percentage && <span className={s.progressPercentage}>{progress.toFixed(0)}%</span>}
+        {/* {percentage && <span className={s.progressPercentage}>{progress.toFixed(0)}%</span>} */}
       </div>
       <div className={s.progressBar}>
         <div className={s.progressFill} style={{ width: `${progress}%` }}>

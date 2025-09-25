@@ -1,10 +1,7 @@
 .blockHeader {
   display: flex;
-  align-items: flex-start;
   justify-content: space-between;
-  position: relative;
   gap: 20px;
-  flex-wrap: wrap;
 
   &__title {
     font-size: clamp(28px, 3.5vw, 36px);
@@ -28,6 +25,7 @@
     background: linear-gradient(135deg, #2c48ff 0%, #4158d0 100%);
     box-shadow: 0 6px 12px rgba(44, 72, 255, 0.4);
     transition: all 0.3s ease;
+    max-height: 50px;
 
     &:hover {
       background: linear-gradient(135deg, #2238c8 0%, #3646b3 100%);
@@ -40,6 +38,14 @@
       box-shadow: 0 4px 8px rgba(26, 43, 157, 0.5);
       transform: translateY(1px);
     }
+  }
+
+  &__arrow {
+    display: flex;
+    color: #858585;
+    align-items: center;
+    gap: 18x;
+    cursor: pointer;
   }
 
   @media (max-width: 480px) {
