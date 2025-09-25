@@ -33,7 +33,19 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
-    max-height: 500px;
-    overflow: auto;
+  }
+
+  &__button {
+    padding: 12px 32px;
+    color: #4b5563;
+    font-weight: 500;
+    border-radius: 16px;
+    border: 2px dashed #d1d5db;
+    transition: all 0.3s;
+
+    &:hover {
+      border-color: #9ca3af;
+      background-color: #ffffff;
+    }
   }
 }

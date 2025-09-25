@@ -22,6 +22,11 @@ interface ModalState {
   closeEditModal: () => void;
   toggleEditModal: () => void;
 
+  isTransactionOpen: boolean;
+  openTransactionModal: () => void;
+  closeTransactionModal: () => void;
+  toggleTransactionModal: () => void;
+
   type: "edit" | "add";
   setType: (type: "edit" | "add") => void;
   selectedTransaction: TTransaction | null;
@@ -40,6 +45,11 @@ export const useModalStore = create<ModalState>()(
       openEditModal: () => set({ isEditOperationOpen: true }),
       closeEditModal: () => set({ isEditOperationOpen: false }),
       toggleEditModal: () => set((state) => ({ isEditOperationOpen: !state.isEditOperationOpen })),
+
+      isTransactionOpen: false,
+      openTransactionModal: () => set({ isTransactionOpen: true }),
+      closeTransactionModal: () => set({ isTransactionOpen: false }),
+      toggleTransactionModal: () => set((state) => ({ isTransactionOpen: !state.isTransactionOpen })),
 
       type: "add",
       setType: (type: "edit" | "add") => set({ type }),

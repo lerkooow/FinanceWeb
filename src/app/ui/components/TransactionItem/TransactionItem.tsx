@@ -2,9 +2,9 @@
 
 import { Trash, Pencil } from "lucide-react";
 
-import { deleteTransactionAction } from "@/app/actions/transactions";
-
 import { useModalStore } from "../../../../../stores/modalStore";
+
+import { deleteTransactionAction } from "@/app/api/actions/transactions";
 
 import s from "./TransactionItem.module.scss";
 

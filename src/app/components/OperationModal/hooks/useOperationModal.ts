@@ -3,8 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { useModalStore } from "../../../../../stores/modalStore";
-
-import { addTransactionAction, updateTransactionAction } from "@/app/actions/transactions";
+import { addTransactionAction, updateTransactionAction } from "@/app/api/actions/transactions";
 
 type TUseOperationModalProps = {
   type: "add" | "edit";

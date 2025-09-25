@@ -6,6 +6,7 @@ import { categoryIcons } from "@/app/mockData";
 import { useModalStore } from "../../../../stores/modalStore";
 import { EmptyTransactions } from "./EmptyTransactions";
 import { BlockHeader } from "@/app/ui/components/BlockHeader/BlockHeader";
+import { Button } from "@/app/ui/components/Button";
 
 import s from "./RecentTransactions.module.scss";
 
@@ -24,10 +25,14 @@ type TRecentTransactionsProps = {
 };
 
 export const RecentTransactions = ({ transactions }: TRecentTransactionsProps) => {
-  const { setSelectedTransaction, openEditModal, openAddModal, setType } = useModalStore();
+  const { setSelectedTransaction, openEditModal, openAddModal, openTransactionModal, setType } = useModalStore();
   const handleClick = () => {
     openAddModal();
     setType("add");
+  };
+
+  const handleTransactionClick = () => {
+    openTransactionModal();
   };
 
   return (
@@ -35,7 +40,7 @@ export const RecentTransactions = ({ transactions }: TRecentTransactionsProps) =
       <BlockHeader title="Последние операции" subtitle="Ваши недавние доходы и расходы" buttonText="Добавить операцию" icon="/plus.svg" onButtonClick={handleClick} />
       <div className={s.recentTransactions__transactionsList}>
         {transactions.length > 0 ? (
-          transactions.map((transaction) => {
+          transactions.slice(0, 5).map((transaction) => {
             const IconComponent = categoryIcons[transaction.icon as keyof typeof categoryIcons];
             return (
               <TransactionItem
@@ -55,6 +60,11 @@ export const RecentTransactions = ({ transactions }: TRecentTransactionsProps) =
           })
         ) : (
           <EmptyTransactions />
+        )}
+        {transactions.length > 6 && (
+          <Button className={s.recentTransactions__button} onClick={handleTransactionClick}>
+            Показать больше транзакций
+          </Button>
         )}
       </div>
     </div>

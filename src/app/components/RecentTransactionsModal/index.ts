@@ -1,0 +1,1 @@
+export { RecentTransactionsModal } from "./RecentTransactionsModal";

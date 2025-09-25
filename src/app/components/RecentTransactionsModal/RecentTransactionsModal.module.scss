@@ -1,0 +1,27 @@
+.recentTransactionsModal {
+  &__container {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #fff;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 800px;
+    max-height: 90vh;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    padding: 32px;
+    height: 100%;
+    margin: 0 12px;
+  }
+}

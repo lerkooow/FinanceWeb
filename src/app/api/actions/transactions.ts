@@ -4,8 +4,8 @@ import { auth } from "@clerk/nextjs/server";
 import { eq, and } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
-import { db } from "../../../db";
-import { TransactionTable, UserTable } from "../../../db/schema";
+import { db } from "../../../../db";
+import { TransactionTable, UserTable } from "../../../../db/schema";
 
 export const deleteTransactionAction = async (transactionId: number) => {
   const { userId } = await auth();

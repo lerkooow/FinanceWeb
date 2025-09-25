@@ -19,6 +19,8 @@ type TBlockHeaderProps = {
 
 export const BlockHeader = ({ title, arrow, subtitle, buttonText, icon, onButtonClick }: TBlockHeaderProps) => {
   const isMobile = useMediaQuery("(max-width: 768px)");
+  const isMobileSmall = useMediaQuery("(max-width: 375px)");
+
   const router = useRouter();
 
   const handleClick = () => {
@@ -39,7 +41,7 @@ export const BlockHeader = ({ title, arrow, subtitle, buttonText, icon, onButton
       )}
       {arrow && isMobile && (
         <div className={s.blockHeader__arrow}>
-          <p>Подробнее</p>
+          {!isMobileSmall && <p>Подробнее</p>}
           <Image src="/arrow.svg" height={32} width={32} alt="Arrow" className={s.blockHeader__icon} onClick={handleClick} />
         </div>
       )}
