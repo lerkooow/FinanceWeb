@@ -23,5 +23,29 @@
     padding: 32px;
     height: 100%;
     margin: 0 12px;
+    gap: 24px;
+  }
+
+  &__closeButton {
+    cursor: pointer;
+    transition: all 0.3s;
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+
+    &:hover {
+      color: #4b5563;
+      background: #e5e7eb;
+      border-radius: 10px;
+    }
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__transactions {
+    overflow: auto;
   }
 }

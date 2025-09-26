@@ -1,1 +1,1 @@
-export { RecentTransactionsModal } from "./RecentTransactionsModal";
+export { RecentTransactionsModal } from "./RecentTransactionsModalClient";

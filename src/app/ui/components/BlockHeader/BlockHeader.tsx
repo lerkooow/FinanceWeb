@@ -36,7 +36,7 @@ export const BlockHeader = ({ title, arrow, subtitle, buttonText, icon, onButton
 
       {buttonText && (
         <Button className={s.blockHeader__primary} icon={icon} onClick={onButtonClick}>
-          {buttonText}
+          {!isMobile && buttonText}
         </Button>
       )}
       {arrow && isMobile && (
