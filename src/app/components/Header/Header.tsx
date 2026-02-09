@@ -1,7 +1,5 @@
 "use client";
 
-import Image from "next/image";
-
 import { SignedIn, UserButton, useUser } from "@clerk/nextjs";
 
 import s from "./Header.module.scss";

@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-type TTransaction = {
+export type TTransaction = {
   id: number;
   type: "expense" | "income";
   icon: string;
@@ -58,6 +58,6 @@ export const useModalStore = create<ModalState>()(
     }),
     {
       name: "modal-storage",
-    }
-  )
+    },
+  ),
 );

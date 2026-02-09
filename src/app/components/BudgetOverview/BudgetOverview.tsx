@@ -1,13 +1,14 @@
+"use server";
+
 import { BudgetCard } from "@/app/ui/components/BudgetCard";
 import { ProgressSection } from "@/app/ui/components/ProgressSection";
 import { BlockHeader } from "@/app/ui/components/BlockHeader/BlockHeader";
 
-import { useBudgetOverview } from "./hooks/useBudgetOverview";
-
 import s from "./BudgetOverview.module.scss";
+import { getBudgetOverview } from "./hooks/useBudgetOverview";
 
 export const BudgetOverview = async () => {
-  const { cards, formatted, dailyBudget, progress, renderNotice } = await useBudgetOverview();
+  const { cards, formatted, dailyBudget, progress, notice } = await getBudgetOverview();
 
   return (
     <div className={s.budgetOverview}>
@@ -18,7 +19,7 @@ export const BudgetOverview = async () => {
           <BudgetCard key={card.title} {...card} />
         ))}
       </div>
-      {renderNotice()}
+      {notice}
       <div className={s.budgetOverview__bottom}>
         <div className={s.budgetOverview__dailyBudget}>Ваш бюджет на день: {dailyBudget} ₽</div>
         <ProgressSection progress={progress} title="Использование бюджета" />

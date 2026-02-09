@@ -3,10 +3,10 @@ import s from "./ProgressSection.module.scss";
 type TProgressSection = {
   progress: number;
   title?: string;
-  percentage?: boolean;
+  // percentage?: boolean;
 };
 
-export const ProgressSection = ({ progress, title, percentage = true }: TProgressSection) => {
+export const ProgressSection = ({ progress, title }: TProgressSection) => {
   return (
     <div className={s.progressSection}>
       <div className={s.progressInfo}>

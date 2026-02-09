@@ -2,7 +2,7 @@
 
 import { Trash, Pencil } from "lucide-react";
 
-import { useModalStore } from "../../../../../stores/modalStore";
+import { TTransaction, useModalStore } from "../../../../../stores/modalStore";
 
 import { deleteTransactionAction } from "@/app/api/actions/transactions";
 
@@ -17,7 +17,7 @@ type TTransactionItemProps = {
   category: string;
   date: Date;
   amount: number;
-  setSelectedTransaction: (transaction: any) => void;
+  setSelectedTransaction: (transaction: TTransaction) => void;
   openEditModal: () => void;
 };
 
@@ -56,7 +56,7 @@ export const TransactionItem = ({ id, type, icon, iconName, title, category, dat
   };
 
   const handleEditClick = () => {
-    setSelectedTransaction({ id, type, icon: iconName, title, category, date, amount });
+    setSelectedTransaction({ id, type, icon: iconName ? iconName : "", title, category, date, amount });
     openEditModal();
     setType("edit");
   };
