@@ -3,8 +3,8 @@
 import { auth } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
 
-import { db } from "../../../../../db";
-import { TransactionTable, UserTable } from "../../../../../db/schema";
+import { db } from "../../../../db";
+import { TransactionTable, UserTable } from "../../../../db/schema";
 import { Notice } from "@/app/ui/components/Notice";
 
 export const getBudgetOverview = async () => {
@@ -14,14 +14,26 @@ export const getBudgetOverview = async () => {
     throw new Error("Пользователь не авторизован");
   }
 
-  const dbUser = await db.select().from(UserTable).where(eq(UserTable.clerkUserId, userId)).limit(1);
+  let dbUser = await db.select().from(UserTable).where(eq(UserTable.clerkUserId, userId)).limit(1);
 
-  const transactions = dbUser[0] ? await db.select().from(TransactionTable).where(eq(TransactionTable.userId, dbUser[0].id)) : [];
+  if (!dbUser[0]) {
+    const [newUser] = await db
+      .insert(UserTable)
+      .values({
+        clerkUserId: userId,
+        email: `user_${userId}@example.com`,
+        name: "Без имени",
+      })
+      .returning();
+
+    dbUser = [newUser];
+    console.log("Создан новый пользователь:", newUser);
+  }
+
+  const transactions = await db.select().from(TransactionTable).where(eq(TransactionTable.userId, dbUser[0].id));
 
   const income = transactions.filter((t) => t.type === "income").reduce((sum, t) => sum + t.amount, 0);
-
   const expenses = transactions.filter((t) => t.type === "expense").reduce((sum, t) => sum + t.amount, 0);
-
   const available = income - expenses;
   const progress = income === 0 ? 0 : Math.min((expenses / income) * 100, 100);
 
@@ -49,18 +61,8 @@ export const getBudgetOverview = async () => {
   const cards = [
     { image: "/total.svg", budget: income, title: "Общий бюджет" },
     { image: "/spent.svg", budget: expenses, title: "Потрачено" },
-    {
-      image: "/remaining.svg",
-      budget: Math.max(available, 0),
-      title: "Доступно",
-    },
+    { image: "/remaining.svg", budget: Math.max(available, 0), title: "Доступно" },
   ];
 
-  return {
-    cards,
-    formatted,
-    dailyBudget,
-    progress,
-    notice,
-  };
+  return { cards, formatted, dailyBudget, progress, notice };
 };

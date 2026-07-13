@@ -2,7 +2,7 @@ import { ProgressSection } from "@/app/ui/components/ProgressSection";
 import { BlockHeader } from "@/app/ui/components/BlockHeader/BlockHeader";
 
 import s from "./BudgetOverviewMore.module.scss";
-import { getBudgetOverview } from "../BudgetOverview/hooks/useBudgetOverview";
+import { getBudgetOverview } from "../BudgetOverview/getBudgetOverview";
 
 export const BudgetOverviewMore = async () => {
   const { dailyBudget, progress } = await getBudgetOverview();
