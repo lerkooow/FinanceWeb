@@ -1,16 +1,17 @@
-import { auth } from "@clerk/nextjs/server";
-import { eq, desc } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { db } from "../../../../../db";
-import { TransactionTable, UserTable } from "../../../../../db/schema";
+import { TransactionTable } from "../../../../../db/schema";
 import { RecentTransactionsModalClient } from "../RecentTransactionsModalClient";
+import { getAuthenticatedUserId, getUserByClerkUserId } from "@/lib/user";
 
 export const RecentTransactionsModalServer = async () => {
-  const { userId } = await auth();
-  if (!userId) throw new Error("User is not authenticated");
+  const userId = await getAuthenticatedUserId();
 
-  const dbUser = await db.select().from(UserTable).where(eq(UserTable.clerkUserId, userId)).limit(1);
+  if (!userId) {
+    return <RecentTransactionsModalClient transactions={[]} />;
+  }
 
-  const user = dbUser[0];
+  const user = await getUserByClerkUserId(userId);
 
   const dbTransactions = user ? await db.select().from(TransactionTable).where(eq(TransactionTable.userId, user.id)).orderBy(desc(TransactionTable.id)) : [];
 

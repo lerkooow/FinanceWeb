@@ -1,36 +1,63 @@
 "use server";
 
-import { auth } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
 
 import { db } from "../../../../db";
 import { TransactionTable, UserTable } from "../../../../db/schema";
 import { Notice } from "@/app/ui/components/Notice";
+import { getAuthenticatedUserId, getUserByClerkUserId } from "@/lib/user";
 
 export const getBudgetOverview = async () => {
-  const { userId } = await auth();
+  const userId = await getAuthenticatedUserId();
 
   if (!userId) {
-    throw new Error("Пользователь не авторизован");
+    return {
+      cards: [
+        { image: "/total.svg", budget: 0, title: "Общий бюджет" },
+        { image: "/spent.svg", budget: 0, title: "Потрачено" },
+        { image: "/remaining.svg", budget: 0, title: "Доступно" },
+      ],
+      formatted: new Date().toLocaleDateString("ru-RU", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+      }),
+      dailyBudget: 0,
+      progress: 0,
+      notice: null,
+    };
   }
 
-  let dbUser = await db.select().from(UserTable).where(eq(UserTable.clerkUserId, userId)).limit(1);
+  let dbUser = await getUserByClerkUserId(userId);
 
-  if (!dbUser[0]) {
-    const [newUser] = await db
-      .insert(UserTable)
-      .values({
-        clerkUserId: userId,
-        email: `user_${userId}@example.com`,
-        name: "Без имени",
-      })
-      .returning();
+  if (!dbUser) {
+    try {
+      const [newUser] = await db
+        .insert(UserTable)
+        .values({
+          clerkUserId: userId,
+          email: `user_${userId}@example.com`,
+          name: "Без имени",
+        })
+        .returning();
 
-    dbUser = [newUser];
-    console.log("Создан новый пользователь:", newUser);
+      dbUser = newUser;
+      console.log("Создан новый пользователь:", newUser);
+    } catch (error) {
+      console.error("❌ Ошибка при создании пользователя для бюджета:", error);
+      dbUser = null;
+    }
   }
 
-  const transactions = await db.select().from(TransactionTable).where(eq(TransactionTable.userId, dbUser[0].id));
+  let transactions: Array<{ type: string; amount: number }> = [];
+
+  if (dbUser) {
+    try {
+      transactions = await db.select().from(TransactionTable).where(eq(TransactionTable.userId, dbUser.id));
+    } catch (error) {
+      console.error("❌ Ошибка при загрузке транзакций для бюджета:", error);
+    }
+  }
 
   const income = transactions.filter((t) => t.type === "income").reduce((sum, t) => sum + t.amount, 0);
   const expenses = transactions.filter((t) => t.type === "expense").reduce((sum, t) => sum + t.amount, 0);
