@@ -37,9 +37,15 @@ export const deleteTransactionAction = async (transactionId: number) => {
 
   try {
     await db.delete(TransactionTable).where(and(eq(TransactionTable.id, transactionId), eq(TransactionTable.userId, user.id)));
-    revalidatePath("/account");
   } catch (error) {
     console.error("❌ Ошибка при удалении транзакции:", error);
+    return null;
+  }
+
+  try {
+    revalidatePath("/account");
+  } catch (error) {
+    console.error("❌ Ошибка при обновлении страницы после удаления транзакции:", error);
   }
 
   return null;
@@ -58,8 +64,10 @@ export const addTransactionAction = async (data: { title: string; category: stri
     return null;
   }
 
+  let newTransaction;
+
   try {
-    const [newTransaction] = await db
+    [newTransaction] = await db
       .insert(TransactionTable)
       .values({
         userId: user.id,
@@ -72,15 +80,19 @@ export const addTransactionAction = async (data: { title: string; category: stri
         description: data.description || null,
       })
       .returning();
-
-    revalidatePath("/account");
-    console.log("Транзакция добавлена:", newTransaction);
-
-    return newTransaction;
   } catch (error) {
     console.error("❌ Ошибка при добавлении транзакции:", error);
     return null;
   }
+
+  try {
+    revalidatePath("/account");
+  } catch (error) {
+    console.error("❌ Ошибка при обновлении страницы после добавления транзакции:", error);
+  }
+
+  console.log("Транзакция добавлена:", newTransaction);
+  return newTransaction;
 };
 
 export const updateTransactionAction = async (
@@ -99,8 +111,10 @@ export const updateTransactionAction = async (
     return null;
   }
 
+  let updatedTransaction;
+
   try {
-    const [updatedTransaction] = await db
+    [updatedTransaction] = await db
       .update(TransactionTable)
       .set({
         title: data.title,
@@ -113,13 +127,17 @@ export const updateTransactionAction = async (
       })
       .where(and(eq(TransactionTable.id, transactionId), eq(TransactionTable.userId, user.id)))
       .returning();
-
-    revalidatePath("/account");
-    console.log("Транзакция обновлена:", updatedTransaction);
-
-    return updatedTransaction;
   } catch (error) {
     console.error("❌ Ошибка при обновлении транзакции:", error);
     return null;
   }
+
+  try {
+    revalidatePath("/account");
+  } catch (error) {
+    console.error("❌ Ошибка при обновлении страницы после обновления транзакции:", error);
+  }
+
+  console.log("Транзакция обновлена:", updatedTransaction);
+  return updatedTransaction;
 };

@@ -30,18 +30,24 @@ export const useOperationModal = ({ type }: TUseOperationModalProps) => {
   };
 
   const handleAddTransaction = async () => {
-    const result = await addTransactionAction({
-      title: description,
-      category: category,
-      amount: amount,
-      type: operationType,
-      icon: selectedIcon,
-      description: description,
-    });
+    try {
+      const result = await addTransactionAction({
+        title: description,
+        category: category,
+        amount: amount,
+        type: operationType,
+        icon: selectedIcon,
+        description: description,
+      });
 
-    if (result) {
-      resetForm();
-      closeAddModal();
+      if (result) {
+        resetForm();
+        closeAddModal();
+      } else {
+        console.error("Не удалось добавить транзакцию");
+      }
+    } catch (error) {
+      console.error("Ошибка при добавлении транзакции:", error);
     }
   };
 
@@ -64,17 +70,23 @@ export const useOperationModal = ({ type }: TUseOperationModalProps) => {
   const handleEditTransaction = async () => {
     if (!selectedTransaction) return;
 
-    const result = await updateTransactionAction(selectedTransaction.id, {
-      title: description,
-      category: category,
-      amount: amount,
-      type: operationType,
-      description: description,
-    });
+    try {
+      const result = await updateTransactionAction(selectedTransaction.id, {
+        title: description,
+        category: category,
+        amount: amount,
+        type: operationType,
+        description: description,
+      });
 
-    if (result) {
-      resetForm();
-      closeEditModal();
+      if (result) {
+        resetForm();
+        closeEditModal();
+      } else {
+        console.error("Не удалось обновить транзакцию");
+      }
+    } catch (error) {
+      console.error("Ошибка при обновлении транзакции:", error);
     }
   };
 
