@@ -14,9 +14,9 @@ type TButtonProps = {
   icon?: string;
 };
 
-export const Button = ({ children, className = "", icon = "", onClick, variant = "without" }: TButtonProps) => {
+export const Button = ({ children, className = "", icon = "", onClick, variant = "without", disabled = false, type = "button" }: TButtonProps) => {
   return (
-    <button className={`${s.button} ${s[variant]} ${className || ""}`} onClick={onClick}>
+    <button className={`${s.button} ${s[variant]} ${className || ""}`} onClick={() => !disabled && onClick?.()} disabled={disabled} type={type}>
       {icon && <Image src={icon} alt="Icon" width={24} height={24} />}
       {children}
     </button>

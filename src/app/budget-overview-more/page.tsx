@@ -4,6 +4,8 @@ import { BackButton } from "../components/BackButton/BackButton";
 
 import s from "./page.module.scss";
 
+export const dynamic = "force-dynamic";
+
 export default function page() {
   return (
     <div className={s.page}>

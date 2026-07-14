@@ -6,6 +6,8 @@ import s from "./page.module.scss";
 import { RecentTransactionsModalServer } from "../components/RecentTransactionsModal/RecentTransactionsModalServer/RecentTransactionsModalServer";
 import { getAuthenticatedUserId } from "@/lib/user";
 
+export const dynamic = "force-dynamic";
+
 export default async function page() {
   const userId = await getAuthenticatedUserId();
 

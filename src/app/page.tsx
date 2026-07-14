@@ -6,6 +6,8 @@ import { auth } from "@clerk/nextjs/server";
 
 import s from "./page.module.scss";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const { userId } = await auth();
 
