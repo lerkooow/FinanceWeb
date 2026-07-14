@@ -4,8 +4,23 @@ import { eq, and } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
 import { db } from "../../../../db";
-import { TransactionTable, UserTable } from "../../../../db/schema";
-import { getAuthenticatedUserId, getUserByClerkUserId } from "@/lib/user";
+import { TransactionTable } from "../../../../db/schema";
+import { createOrGetUser, getAuthenticatedUserId, getUserByClerkUserId } from "@/lib/user";
+
+const getOrCreateDbUser = async (userId: string) => {
+  const existingUser = await getUserByClerkUserId(userId);
+
+  if (existingUser) {
+    return existingUser;
+  }
+
+  try {
+    return await createOrGetUser(userId, `user_${userId}@example.com`, "Без имени");
+  } catch (error) {
+    console.error("❌ Ошибка при создании пользователя для транзакции:", error);
+    return null;
+  }
+};
 
 export const deleteTransactionAction = async (transactionId: number) => {
   const userId = await getAuthenticatedUserId();
@@ -14,7 +29,7 @@ export const deleteTransactionAction = async (transactionId: number) => {
     return null;
   }
 
-  const user = await getUserByClerkUserId(userId);
+  const user = await getOrCreateDbUser(userId);
 
   if (!user) {
     return null;
@@ -37,7 +52,7 @@ export const addTransactionAction = async (data: { title: string; category: stri
     return null;
   }
 
-  const user = await getUserByClerkUserId(userId);
+  const user = await getOrCreateDbUser(userId);
 
   if (!user) {
     return null;
@@ -78,7 +93,7 @@ export const updateTransactionAction = async (
     return null;
   }
 
-  const user = await getUserByClerkUserId(userId);
+  const user = await getOrCreateDbUser(userId);
 
   if (!user) {
     return null;

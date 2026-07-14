@@ -29,8 +29,8 @@ export const useOperationModal = ({ type }: TUseOperationModalProps) => {
     setCategory("");
   };
 
-  const handleAddTransaction = () => {
-    addTransactionAction({
+  const handleAddTransaction = async () => {
+    const result = await addTransactionAction({
       title: description,
       category: category,
       amount: amount,
@@ -39,8 +39,10 @@ export const useOperationModal = ({ type }: TUseOperationModalProps) => {
       description: description,
     });
 
-    resetForm();
-    closeAddModal();
+    if (result) {
+      resetForm();
+      closeAddModal();
+    }
   };
 
   useEffect(() => {
@@ -62,7 +64,7 @@ export const useOperationModal = ({ type }: TUseOperationModalProps) => {
   const handleEditTransaction = async () => {
     if (!selectedTransaction) return;
 
-    await updateTransactionAction(selectedTransaction.id, {
+    const result = await updateTransactionAction(selectedTransaction.id, {
       title: description,
       category: category,
       amount: amount,
@@ -70,8 +72,10 @@ export const useOperationModal = ({ type }: TUseOperationModalProps) => {
       description: description,
     });
 
-    resetForm();
-    closeEditModal();
+    if (result) {
+      resetForm();
+      closeEditModal();
+    }
   };
 
   return {
