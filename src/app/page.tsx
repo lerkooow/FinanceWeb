@@ -25,11 +25,15 @@ export default async function Home() {
       <SignedOut>
         <div className={s.page__auth}>
           <SignUpButton mode="modal" forceRedirectUrl="/account">
-            <Button className={s.page__primary}>ЗАРЕГИСТРИРОВАТЬСЯ</Button>
+            <button type="button" className={s.page__primary}>
+              ЗАРЕГИСТРИРОВАТЬСЯ
+            </button>
           </SignUpButton>
 
           <SignInButton mode="modal" forceRedirectUrl="/account">
-            <p>У меня уже есть аккаунт</p>
+            <button type="button" className={s.page__secondaryLink}>
+              У меня уже есть аккаунт
+            </button>
           </SignInButton>
         </div>
       </SignedOut>
